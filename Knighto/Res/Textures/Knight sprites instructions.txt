@@ -1,0 +1,1 @@
+ Numering frames from 1 to 8. Idle: 1; Walk: 1, 2, 1, 3; Punch: 4, 5, 6; Got Hit: 7 or 8 or 7, 8; Dead: 9.
