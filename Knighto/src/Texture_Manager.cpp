@@ -1,4 +1,4 @@
-#include "../include/Texture_Manager.h"
+#include "Texture_Manager.h"
 
 void Texture_Manager::load(const std::string& name, const std::string& filename)
 {

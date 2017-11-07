@@ -110,6 +110,11 @@ void Player::stop()
 	this->m_AnimatedSprite.stop();
 }
 
+bool Player::isCollide()
+{
+	
+}
+
 void Player::attack(EntityBase * other_entity)
 {
 	other_entity = NULL;
@@ -128,7 +133,8 @@ void Player::update(float dt)
 	sf::Time frameTime = sf::seconds(dt);
 	m_AnimatedSprite.play(currentAnimation);
 	m_AnimatedSprite.move(this->velocity* frameTime.asSeconds());
-	
+
+
 	m_Pos = m_AnimatedSprite.getPosition();
 
 	velocity = { 0.0f, 0.0f };

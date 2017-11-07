@@ -13,10 +13,14 @@ private:
 	std::vector<Tile> tiles;
 	std::vector<Player> entities;
 	std::vector <sf::Rect <int> > solidTiles;
+
+	float gravity;
+	sf::Vector2f m_spawnPos;
+
+	sf::FloatRect m_levelBounds;
 public:
 
 	int m_width, m_height;
-	sf::Vector2f m_startPos;
 	unsigned int m_TileSize;
 
 	//void load(const std::string& filename, unsigned int width, unsigned int height, std::map<std::string, Tile>& tileAtlas);
@@ -30,13 +34,14 @@ public:
 
 	void update(float dt);
 	void draw(sf::RenderWindow& window, float dt);
-	bool isColliding(const Player& other);
+	bool isColliding(Player& other);
 	Tile GetTile(unsigned int l_x, unsigned int l_y);
 	Level()
 	{
 		this->m_TileSize = 8;
 		this->m_width = 0;
 		this->m_height = 0;
+		this->m_levelBounds = {0.f, 0.f,0.f,0.f};
 	}
 	//Level(const std::string& filename, unsigned int width, unsigned int height, std::map<std::string, Tile>& tileAtlas)
 

@@ -14,12 +14,13 @@ private:
 	sf::Vector2f direction;
 	sf::Vector2f velocity;
 	bool IsMoving = false;
+
 public:
 	void update(float dt);
 	void draw(sf::RenderWindow & window, float dt);
 	void move(float speedX, float speedY);
 	void stop();
-	bool isCollide() { return false; }
+	bool isCollide();;
 
 	void attack(EntityBase* other_entity);
 

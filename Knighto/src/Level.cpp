@@ -12,6 +12,12 @@ void Level::loadByText(const std::string & filename, std::map<std::string, Tile>
 		inputFile >> this->m_width;
 		inputFile >> this->m_height;
 
+		this->m_levelBounds.left = 0.0f;
+		this->m_levelBounds.top = 0.0f;
+		this->m_levelBounds.height = m_height;
+		this->m_levelBounds.width = m_width;
+		this->gravity = 80.f;
+
 		for (int pos = 0; pos < this->m_width * this->m_height; ++pos)
 		{
 			int type =0;
@@ -54,6 +60,12 @@ void Level::load(const std::string & filename, std::map<std::string, Tile>& tile
 
 	inputFile.read((char*)&this->m_width, sizeof(int));
 	inputFile.read((char*)&this->m_height, sizeof(int));
+
+	this->m_levelBounds.left = 0.0f;
+	this->m_levelBounds.top = 0.0f;
+	this->m_levelBounds.height = m_height;
+	this->m_levelBounds.width = m_width;
+
 
 	for (int pos = 0; pos < this->m_width * this->m_height; ++pos)
 	{
@@ -156,6 +168,7 @@ void Level::save(const std::string & filename)
 
 void Level::update(float dt)
 {
+
 }
 
 void Level::draw(sf::RenderWindow& window, float dt)
@@ -176,9 +189,16 @@ void Level::draw(sf::RenderWindow& window, float dt)
 	}
 }
 
-bool Level::isColliding(const Player & other)
+bool Level::isColliding(Player & player)
 {
-	return false;
+	sf::Vector2f position = player.getPosition();
+	sf::Vector2f velocity = player.getSpeed();
+	if (player.getPosition().x <= m_levelBounds.left || player.getPosition().x >= m_levelBounds.width)
+	{
+		velocity.x = -velocity.x;
+		player.setAcceleration(velocity.x, velocity.y);
+		return true;
+	}
 }
 
 Tile Level::GetTile(unsigned int l_x, unsigned int l_y)

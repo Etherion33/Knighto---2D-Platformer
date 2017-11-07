@@ -26,6 +26,7 @@ void Game_State_Gameplay::update(const float dt)
 	ImGui::SFML::Update(this->game->window, sf::seconds(dt));
 	this->gameView.setCenter(player.getPosition());
 	this->player.update(dt);
+	this->level.isColliding(player);
 	this->level.update(dt);
 	ImGui::Begin("Debug window");
 	ImGui::Text("FPS: %lf", 1.f / dt);
@@ -85,6 +86,7 @@ void Game_State_Gameplay::handleInput()
 		case sf::Event::Resized:
 		{
 			gameView.setSize(event.size.width, event.size.height);
+			gameView.zoom(0.25f);
 			guiView.setSize(event.size.width, event.size.height);
 			this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0), this->guiView));
 			this->game->background.setScale(
