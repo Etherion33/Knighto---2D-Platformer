@@ -12,6 +12,11 @@ EntityBase::EntityBase(Entity_Manager* enmgr)
 
 EntityBase::~EntityBase() {}
 
+void EntityBase::setId(unsigned int id)
+{
+	m_Id = id;
+}
+
 void EntityBase::setPosition(float l_x, float l_y) {
 	m_Pos = sf::Vector2f(l_x, l_y);
 	UpdateAABB();
@@ -105,6 +110,16 @@ void EntityBase::applyFriction(float l_x, float l_y) {
 
 void EntityBase::UpdateAABB() {
 	m_AABB = sf::FloatRect(m_Pos.x - (m_Size.x / 2), m_Pos.y - m_Size.y, m_Size.x, m_Size.y);
+}
+
+void EntityBase::CheckCollisions()
+{
+
+}
+
+void EntityBase::ResolveCollisions()
+{
+
 }
 
 std::string EntityBase::stateToString()

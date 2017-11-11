@@ -23,3 +23,8 @@ void Character::update(const float dt)
 {
 
 }
+
+void Character::OnEntityCollision(EntityBase * eb_collider, bool b_attack)
+{
+
+}

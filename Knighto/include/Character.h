@@ -15,5 +15,7 @@ public:
 
 	virtual void draw(sf::RenderWindow & window, float dt);
 	virtual void update(const float dt);
+
+	virtual void OnEntityCollision(EntityBase* eb_collider, bool b_attack);
 };
 

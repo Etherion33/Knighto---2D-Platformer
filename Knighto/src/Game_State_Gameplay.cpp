@@ -161,10 +161,14 @@ Game_State_Gameplay::Game_State_Gameplay(Game* game, std::string selectedLevel)
 
 	level = Level(selectedLevel, game->tileAtlas);
 	player = new Player(&this->game->entmgr, this->game->texmgr.getRef("knightSS"));
-	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS")));
-	EntityBase* monster = this->game->entmgr.getById(0);
+	this->game->entmgr.add(player);
+	this->game->entmgr.add(new Enemy(nullptr, this->game->texmgr.getRef("orcSS"), { 100.f,100.f }));
+	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS"), { 125.f,100.f }));
+	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS"), { 150.f,100.f }));
+	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS"), { 170.f,100.f }));
+
+	EntityBase* monster = this->game->entmgr.getByName("Knighto");
 	std::cout << monster->getName();
-	std::cout << monster->getPosition().x;
 	//player = Player(this->game->entmgr, this->game->texmgr.getRef("knightSS"));
 	player->setPosition({ 50.f,this->level.m_height*0.5f });
 

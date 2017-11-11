@@ -2,23 +2,42 @@
 
 Entity_Manager::Entity_Manager()
 {
+	m_nOfEntities = 0;
 
 }
 
 
 Entity_Manager::~Entity_Manager()
 {
-
 }
 
 void Entity_Manager::add(EntityBase* e)
 {
+	e->setId(m_nOfEntities);
 	m_entities.push_back(e);
+	m_nOfEntities++;
 }
 
 EntityBase * Entity_Manager::getById(unsigned int id)
 {
-	return m_entities.back();
+	return m_entities.at(id);
+}
+
+EntityBase * Entity_Manager::getByName(const std::string & name)
+{
+	for (EntityBase* e : m_entities)
+	{
+		if (e->getName() == name)
+		{
+			return e;
+		}
+	}
+	return nullptr;
+}
+
+void Entity_Manager::destroyAll()
+{
+	m_entities.clear();
 }
 
 void Entity_Manager::draw(sf::RenderWindow & window, float dt)

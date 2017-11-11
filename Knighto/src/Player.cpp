@@ -4,6 +4,7 @@
 Player::Player(Entity_Manager* enmgr, const sf::Texture& spritesheet)
 	: Character(enmgr)
 {
+	this->m_Name = "Knighto";
 	this->m_health = 125;
 	this->m_Velocity = { 80.f , 80.f };
 	this->m_Animations["idle"].setSpriteSheet(spritesheet);

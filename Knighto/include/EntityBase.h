@@ -33,6 +33,7 @@ public:
 
 	sf::Vector2f getSpeed() { return m_Velocity; }
 
+	void setId(unsigned int id);
 	void setPosition(float f_X, float f_Y);
 	void setPosition(const sf::Vector2f& pos);
 	void setSize(float f_X, float f_Y);
@@ -53,7 +54,7 @@ protected:
 	void CheckCollisions();
 	void ResolveCollisions();
 
-	//virtual void OnEntityCollision(EntityBase* eb_collider, bool b_attack) = 0;
+	virtual void OnEntityCollision(EntityBase* eb_collider, bool b_attack) = 0;
 
 	std::string m_Name;
 	EntityType m_enType;
