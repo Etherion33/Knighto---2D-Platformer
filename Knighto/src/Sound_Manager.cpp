@@ -1,4 +1,4 @@
-#include "Sound_Manager.h"
+#include "../include/Sound_Manager.h"
 
 void Sound_Manager::load(const std::string & name, const std::string & filename)
 {

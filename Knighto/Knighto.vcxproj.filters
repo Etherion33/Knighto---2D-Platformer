@@ -25,20 +25,14 @@
     <Filter Include="Source Files\Game_States">
       <UniqueIdentifier>{edc04e57-af0b-4fdd-831b-a0e5a93d9b1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Libraries">
+      <UniqueIdentifier>{a9e743e2-f6cb-4f3b-b897-470b6a4e6d19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{894eaa71-2e69-4df3-a51b-27ae19687bf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AnimatedSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation_Handler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EntityBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -52,18 +46,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui-SFML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Enemy.cpp">
@@ -96,6 +78,39 @@
     <ClCompile Include="src\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui-SFML.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui_draw.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui_demo.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimatedSprite.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation_Handler.cpp">
+      <Filter>Header Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EntityBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_State_Game_Over.cpp">
+      <Filter>Source Files\Game_States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity_Manager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AnimatedSprite.h">
@@ -107,16 +122,10 @@
     <ClInclude Include="include\Animation_Handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\EntityBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Tile.h">
@@ -146,14 +155,29 @@
     <ClInclude Include="include\Game_State_Gameplay.h">
       <Filter>Header Files\Game_States</Filter>
     </ClInclude>
-    <ClInclude Include="include\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Enemy.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity_Manager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EntityBase.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Character.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game_State_Game_Over.h">
+      <Filter>Header Files\Game_States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

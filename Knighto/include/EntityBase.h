@@ -21,7 +21,7 @@ class Entity_Manager;
 class EntityBase
 {
 public:
-	EntityBase();
+	EntityBase(Entity_Manager* enmgr);
 	virtual ~EntityBase();
 
 	const sf::Vector2f& getPosition() const;
@@ -46,8 +46,8 @@ public:
 
 	std::string stateToString();
 
-	virtual void draw(sf::RenderWindow & window, float dt) = 0;
-	virtual void update(const float dt) = 0;
+	virtual void draw(sf::RenderWindow & window, float dt)= 0;
+	virtual void update(const float dt)= 0;
 protected:
 	void UpdateAABB();
 	void CheckCollisions();

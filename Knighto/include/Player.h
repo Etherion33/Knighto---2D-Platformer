@@ -4,28 +4,26 @@
 #include <map>
 #include "AnimatedSprite.h"
 #include "Texture_Manager.h"
-#include "EntityBase.h"
+#include "Character.h"
 
 enum class DIRECTION { LEFT, RIGHT, UP, DOWN };
 
-class Player : public EntityBase
+class Player : virtual public Character
 {
 private:
 	sf::Vector2f direction;
 	sf::Vector2f velocity;
 	bool IsMoving = false;
-
 public:
 	void update(float dt);
 	void draw(sf::RenderWindow & window, float dt);
 	void move(float speedX, float speedY);
 	void stop();
-	bool isCollide();;
+	bool isCollide() { return false; }
 
 	void attack(EntityBase* other_entity);
 
-	Player() {}
-	Player(const sf::Texture& texture, const sf::Texture& spritesheet);
+	Player(Entity_Manager* enmgr, const sf::Texture& spritesheet);
 
 
 	Animation getAnimation() { return currentAnimation; }

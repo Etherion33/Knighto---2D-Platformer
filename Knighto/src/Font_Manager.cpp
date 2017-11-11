@@ -1,4 +1,4 @@
-#include "Font_Manager.h"
+#include "../include/Font_Manager.h"
 
 void Font_Manager::load(const std::string & name, const std::string & filename)
 {

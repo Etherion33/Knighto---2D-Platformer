@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AnimatedSprite" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADAAAxAChAAIAAEAAAJAAAAAAAKgAAAUIAAkAAQNIAA=</HashCode>
+      <FileName>include\AnimatedSprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animation" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAEAQAAAJAAAAAggAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animation_Handler" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAgAAAAAAAAAAAAAgBAEAAAAAQCAQAEAAA=</HashCode>
+      <FileName>include\Animation_Handler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Collider" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAKAAAAAAAAIAIAAAAAAAAACQAAAAAAQAAAA=</HashCode>
+      <FileName>include\Collider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EntityBase" Collapsed="true">
+    <Position X="1.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UgAAoLQAAIAQAAiAgAIoAAAyBwIBAhSJAAAkYQJEwAU=</HashCode>
+      <FileName>include\EntityBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="14" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAgAgAABQAAIAAAAAQAgIAAAgiAAAAMAAEAAAABIEA=</HashCode>
+      <FileName>include\Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Level">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAAAgAAICAAAABkAIAAAAAAgAAQQCBAABEAACEAgA=</HashCode>
+      <FileName>include\Level.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tile">
+    <Position X="8.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgCARAAAAAAAAAAAIAAAACAAAAAAQAAAAEAAAEAQA=</HashCode>
+      <FileName>include\Tile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character" Collapsed="true">
+    <Position X="1.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAA=</HashCode>
+      <FileName>include\Character.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Font_Manager">
+    <Position X="6.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAACAAIAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>include\Font_Manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Resource_Manager">
+    <Position X="8.75" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Resource_Manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sound_Manager">
+    <Position X="9" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAIAAAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Sound_Manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture_Manager">
+    <Position X="11.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAMAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Texture_Manager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game_State">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAIAAAAAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>include\Game_State.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game_State_Editor">
+    <Position X="0.75" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAgAAAgAAAAAAIEAAAAAAAAAAAAAQAIAAgEAAA=</HashCode>
+      <FileName>include\Game_State_Editor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game_State_Gameplay">
+    <Position X="3.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAgAAAAAAIAAAQAAAEBAAQBAAAAAAAEAAA=</HashCode>
+      <FileName>include\Game_State_Gameplay.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game_State_Menu">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAIAAAAAAAAAAAABAQAAAAAEQAA=</HashCode>
+      <FileName>include\Game_State_Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="2.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAIACAAAIAAgAAAAIgAAGAAAAAAQAEABA=</HashCode>
+      <FileName>include\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="CollisionElement" Collapsed="true">
+    <Position X="13.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAACAAAEAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>include\EntityBase.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="EntityType" Collapsed="true">
+    <Position X="15.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQAA=</HashCode>
+      <FileName>include\EntityBase.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EntityState" Collapsed="true">
+    <Position X="13.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAJAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAoAA=</HashCode>
+      <FileName>include\EntityBase.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Direction" Collapsed="true">
+    <Position X="15.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>include\EntityBase.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TileType" Collapsed="true">
+    <Position X="17.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQABAAAAAAgAAAAAAAAACACAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>include\Tile.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ActionState" Collapsed="true">
+    <Position X="13.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Game_State_Gameplay.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DIRECTION" Collapsed="true">
+    <Position X="17.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>include\Player.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

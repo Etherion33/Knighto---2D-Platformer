@@ -21,7 +21,7 @@
 //
 ////////////////////////////////////////////////////////////
 
-#include "../include/Animation.h"
+#include "Animation.h"
 
 Animation::Animation() : m_texture(NULL)
 {

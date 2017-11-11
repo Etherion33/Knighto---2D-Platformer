@@ -7,8 +7,7 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include "Texture_Manager.h"
-#include "Font_Manager.h"
-#include "Sound_Manager.h"
+#include "Entity_Manager.h"
 #include "Tile.h"
 //#include "Player.h"
 
@@ -27,9 +26,7 @@ public:
 
 	sf::RenderWindow window;
 	Texture_Manager texmgr;
-	Font_Manager fontmgr;
-	Sound_Manager soundmgr;
-
+	Entity_Manager entmgr;
 	sf::Sprite background;
 
 	std::map<std::string, Tile> tileAtlas;

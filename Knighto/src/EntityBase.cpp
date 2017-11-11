@@ -2,8 +2,10 @@
 #include "../include/Entity_Manager.h"
 #include "../include/Level.h"
 
-EntityBase::EntityBase()
-	:m_Name("BaseEntity"),
+EntityBase::EntityBase(Entity_Manager* enmgr)
+	:
+	m_entityManager(enmgr),
+	m_Name("BaseEntity"),
 	m_enType(EntityType::Base), m_Id(0), m_referenceTile(nullptr),
 	m_enState(EntityState::Idle),
 	m_collidingOnX(false),m_collidingOnY(false){}
@@ -112,4 +114,16 @@ std::string EntityBase::stateToString()
 	case EntityState::Jumping: return "Jumping";
 	case EntityState::Attacking: return "Attacking";
 	}
+}
+
+void EntityBase::draw(sf::RenderWindow & window, float dt)
+{
+	window.draw(this->m_AnimatedSprite);
+	return;
+}
+
+void EntityBase::update(const float dt)
+{
+
+	m_AnimatedSprite.update(sf::seconds(dt));
 }

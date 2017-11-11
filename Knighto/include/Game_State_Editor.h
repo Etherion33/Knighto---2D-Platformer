@@ -19,7 +19,6 @@ public:
 	Game_State_Editor(Game* game);
 private:
 	sf::View view;
-	Player m_Player;
 	Level m_Level;
 };
 

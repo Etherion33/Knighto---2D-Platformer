@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../include/Game_State_Menu.h"
 #include "../include/Game_State_Gameplay.h"
+#include "../include/Game_State_Game_Over.h"
 #include "../include/Game_State.h"
 
 void Game_State_Gameplay::draw(const float dt)
@@ -13,9 +14,8 @@ void Game_State_Gameplay::draw(const float dt)
 
 	this->game->window.setView(this->gameView);
 	level.draw(this->game->window, dt);
-	player.draw(this->game->window, dt);
-
-	return;
+	player->draw(this->game->window, dt);
+	this->game->entmgr.draw(this->game->window, dt);
 }
 
 void Game_State_Gameplay::update(const float dt)
@@ -24,18 +24,18 @@ void Game_State_Gameplay::update(const float dt)
 
 	sf::Vector2f pos(0.f, 0.f);
 	ImGui::SFML::Update(this->game->window, sf::seconds(dt));
-	this->gameView.setCenter(player.getPosition());
-	this->player.update(dt);
-	this->level.isColliding(player);
+	this->gameView.setCenter(player->getPosition());
+	this->player->update(dt);
 	this->level.update(dt);
+	this->game->entmgr.update(dt);
 	ImGui::Begin("Debug window");
 	ImGui::Text("FPS: %lf", 1.f / dt);
 	ImGui::Text("Window position: X : %d", this->game->window.getPosition().x); ImGui::SameLine(200); ImGui::Text("Y: %d", this->game->window.getPosition().y);
-	ImGui::Text("Player position: X : %lf", this->player.getPosition().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", this->player.getPosition().y);
-	ImGui::Text("Player state: %d", this->player.getState());
+	ImGui::Text("Player position: X : %lf", this->player->getPosition().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", this->player->getPosition().y);
+	ImGui::Text("Player state: %d", this->player->getState());
 	ImGui::Text("Level width: %d", level.m_width); ImGui::SameLine(220); ImGui::Text(" height: %d", level.m_height);
 	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
-	
+
 	ImGui::End();
 
 	if (io.MouseDown[1])
@@ -86,7 +86,6 @@ void Game_State_Gameplay::handleInput()
 		case sf::Event::Resized:
 		{
 			gameView.setSize(event.size.width, event.size.height);
-			gameView.zoom(0.25f);
 			guiView.setSize(event.size.width, event.size.height);
 			this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0), this->guiView));
 			this->game->background.setScale(
@@ -97,47 +96,49 @@ void Game_State_Gameplay::handleInput()
 		case sf::Event::KeyPressed:
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				player.setState(EntityState::Walking);
-				player.move(-player.getSpeed().x, 0);
+				player->setState(EntityState::Walking);
+				player->move(-player->getSpeed().x, 0);
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				player.setState(EntityState::Walking);
-				player.move(player.getSpeed().x, 0);
+				player->setState(EntityState::Walking);
+				player->move(player->getSpeed().x, 0);
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				player.setState(EntityState::Walking);
-				player.move(0, -player.getSpeed().y);
+				player->setState(EntityState::Walking);
+				player->move(0, -player->getSpeed().y);
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){ 
-				player.setState(EntityState::Walking);
-				player.move(0, player.getSpeed().y);
+				player->setState(EntityState::Walking);
+				player->move(0, player->getSpeed().y);
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-				player.setState(EntityState::Attacking);
+				player->setState(EntityState::Attacking);
 
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				player.setState(EntityState::Attacking);
+				player->setState(EntityState::Attacking);
 				
 				noKeyWasPressed = false;
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+				player->setState(EntityState::Dying);
+				this->game->pushState(new Game_State_Game_Over(this->game));
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				player.setState(EntityState::Jumping);
+				player->setState(EntityState::Jumping);
 			}
 
 			if (noKeyWasPressed)
 			{
-				player.stop();
+				player->stop();
 			}
 			noKeyWasPressed = true;
 			break;
@@ -159,18 +160,22 @@ Game_State_Gameplay::Game_State_Gameplay(Game* game, std::string selectedLevel)
 	this->guiView.setCenter(pos);
 
 	level = Level(selectedLevel, game->tileAtlas);
-	player = Player(this->game->texmgr.getRef("knight"), this->game->texmgr.getRef("knightSS"));
-	player.setPosition({ 50.f,this->level.m_height*0.5f });
-	level.addEntity(new Player(this->game->texmgr.getRef("orc"), this->game->texmgr.getRef("orcSS")));
-	
-	//sf::Vector2f center(this->player.getPlayerPos().x*0.5, this->player.getPlayerPos().y*0.5);
+	player = new Player(&this->game->entmgr, this->game->texmgr.getRef("knightSS"));
+	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS")));
+	EntityBase* monster = this->game->entmgr.getById(0);
+	std::cout << monster->getName();
+	std::cout << monster->getPosition().x;
+	//player = Player(this->game->entmgr, this->game->texmgr.getRef("knightSS"));
+	player->setPosition({ 50.f,this->level.m_height*0.5f });
+
+	//sf::Vector2f center(player->getPlayerPos().x*0.5, player->getPlayerPos().y*0.5);
 	//gameView.setCenter(center);
 
 	sf::Vector2f centre(this->level.m_width / 2, this->level.m_height / 2);
 	centre *= float(this->level.m_TileSize);
 	gameView.setCenter(centre);
 	gameView.zoom(0.25f);
-	//player.setPosition(centre);
+	//player->setPosition(centre);
 
 	this->actionState = ActionState::NONE;
 }

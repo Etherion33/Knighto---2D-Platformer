@@ -6,6 +6,7 @@
 #include "Game_State.h"
 #include "Level.h"
 #include "Player.h"
+#include "Enemy.h"
 
 enum class ActionState { NONE, PANNING };
 
@@ -19,7 +20,7 @@ private:
 	sf::View guiView;
 
 	Level level;
-	Player player;
+	Player* player;
 public:
 	virtual void draw(const float dt);
 	virtual void update(const float dt);

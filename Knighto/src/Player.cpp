@@ -1,13 +1,14 @@
 #include "../include/Player.h"
 #include <iostream>
 
-Player::Player(const sf::Texture& texture, const sf::Texture& spritesheet)
+Player::Player(Entity_Manager* enmgr, const sf::Texture& spritesheet)
+	: Character(enmgr)
 {
+	this->m_health = 125;
 	this->m_Velocity = { 80.f , 80.f };
 	this->m_Animations["idle"].setSpriteSheet(spritesheet);
 	this->m_Animations["idle"].addFrame(sf::IntRect(24, 0, 24, 24));
 
-	this->m_Sprite.setTexture(texture);
 	this->m_Animations["left"].setSpriteSheet(spritesheet);
 	this->m_Animations["left"].addFrame(sf::IntRect(192, 72, 24, 24));
 	this->m_Animations["left"].addFrame(sf::IntRect(168, 72, 24, 24));
@@ -58,7 +59,7 @@ Player::Player(const sf::Texture& texture, const sf::Texture& spritesheet)
 
 	this->currentAnimation = m_Animations["idle"];
 	this->m_enState = EntityState::Idle;
-
+	this->setSize(24, 24);
 	m_Pos.x = 50.f;
 	m_Pos.y = 50.f;
 
@@ -69,11 +70,7 @@ Player::Player(const sf::Texture& texture, const sf::Texture& spritesheet)
 
 void Player::draw(sf::RenderWindow& window, float dt)
 {
-	//movement.x = 0.0f;
-	//movement.y = 0.0f;
-
 	window.draw(this->m_AnimatedSprite);
-	window.draw(this->m_Sprite);
 	return;
 }
 
@@ -108,11 +105,7 @@ void Player::move(float speedX, float speedY)
 void Player::stop()
 {
 	this->m_AnimatedSprite.stop();
-}
-
-bool Player::isCollide()
-{
-	
+	return;
 }
 
 void Player::attack(EntityBase * other_entity)
@@ -133,11 +126,17 @@ void Player::update(float dt)
 	sf::Time frameTime = sf::seconds(dt);
 	m_AnimatedSprite.play(currentAnimation);
 	m_AnimatedSprite.move(this->velocity* frameTime.asSeconds());
-
-
+	
 	m_Pos = m_AnimatedSprite.getPosition();
 
 	velocity = { 0.0f, 0.0f };
+	if (this->getState() == EntityState::Dying)
+	{
+		currentAnimation = m_Animations["died_left"];
+	}
+
+
+
 	m_AnimatedSprite.update(frameTime);
 
 	//m_PlayerSprite.setPosition(m_PlayerPos);
