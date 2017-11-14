@@ -35,6 +35,12 @@ EntityBase * Entity_Manager::getByName(const std::string & name)
 	return nullptr;
 }
 
+int Entity_Manager::enCount()
+{
+	return m_nOfEntities;
+}
+
+
 void Entity_Manager::destroyAll()
 {
 	m_entities.clear();

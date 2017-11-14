@@ -8,6 +8,7 @@
 #include <imgui-SFML.h>
 #include "Texture_Manager.h"
 #include "Entity_Manager.h"
+#include "EntityBase.h"
 #include "Tile.h"
 //#include "Player.h"
 

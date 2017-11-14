@@ -13,12 +13,12 @@ void Tile::update()
 {
 }
 
-Tile::Tile(Animation& tileAnimation, const TileType tileType, sf::Vector2f tilePos)
+Tile::Tile(Animation& tileAnimation, const TileType tileType, sf::Vector2f tilePos,sf::Vector2f friction)
 {
 	this->m_TileSize = 8;
 	this->m_TileType = tileType;
 	this->m_TileAnimation = tileAnimation;
 	this->m_TilePos = tilePos;
-
+	this->m_friction = friction;
 	this->m_TileAnimatedSprite = AnimatedSprite(sf::seconds(0.2), true, false);
 }

@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "AnimatedSprite.h"
+#include "Tile.h"
 
-enum class EntityType{Base , Enemy, Player};
+enum class EntityType{Base , Enemy, Player, Weapon};
 enum class EntityState{Idle, Walking, Jumping, Attacking, Hurt, Dying};
 
 struct TileInfo;
@@ -21,7 +22,7 @@ class Entity_Manager;
 class EntityBase
 {
 public:
-	EntityBase(Entity_Manager* enmgr);
+	EntityBase();
 	virtual ~EntityBase();
 
 	const sf::Vector2f& getPosition() const;
@@ -47,8 +48,8 @@ public:
 
 	std::string stateToString();
 
-	virtual void draw(sf::RenderWindow & window, float dt)= 0;
-	virtual void update(const float dt)= 0;
+	virtual void draw(sf::RenderWindow & window, float dt);
+	virtual void update(const float dt);
 protected:
 	void UpdateAABB();
 	void CheckCollisions();
@@ -66,7 +67,7 @@ protected:
 	sf::Vector2f m_friction;
 	sf::Vector2f m_Pos;
 	sf::Vector2f m_oldPos;
-	TileInfo* m_referenceTile;
+	Tile* m_referenceTile;
 	sf::Vector2f m_Size;
 	sf::FloatRect m_AABB; // collision box
 	EntityState m_enState;

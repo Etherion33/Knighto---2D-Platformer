@@ -1,12 +1,15 @@
 #include "../include/Player.h"
 #include <iostream>
 
-Player::Player(Entity_Manager* enmgr, const sf::Texture& spritesheet)
-	: Character(enmgr)
+Player::Player(const sf::Texture& spritesheet)
+	: Character()
 {
+	this->m_enType = EntityType::Player;
 	this->m_Name = "Knighto";
 	this->m_health = 125;
 	this->m_Velocity = { 80.f , 80.f };
+	this->m_maxVelocity = { 120.f,120.f };
+	this->m_Speed = { 40.f,40.f };
 	this->m_Animations["idle"].setSpriteSheet(spritesheet);
 	this->m_Animations["idle"].addFrame(sf::IntRect(24, 0, 24, 24));
 
@@ -69,80 +72,34 @@ Player::Player(Entity_Manager* enmgr, const sf::Texture& spritesheet)
 	this->m_AnimatedSprite.setPosition(m_Pos);
 }
 
-void Player::draw(sf::RenderWindow& window, float dt)
-{
-	window.draw(this->m_AnimatedSprite);
-	return;
-}
-
-void Player::move(float speedX, float speedY)
-{
-	if (speedX < 0 && speedY == 0)
-	{
-		this->currentAnimation = m_Animations["left"];
-		this->velocity = { speedX, speedY };
-		IsMoving = true;
-	}
-	if (speedX > 0 && speedY == 0)
-	{
-		this->currentAnimation = m_Animations["right"];
-		this->velocity = { speedX, speedY };
-		IsMoving = true;
-	}
-	if (speedX == 0 && speedY < 0)
-	{
-		this->currentAnimation = m_Animations["up"];
-		this->velocity = { speedX, speedY };
-		IsMoving = true;
-	}
-	if (speedX == 0 && speedY > 0)
-	{
-		this->currentAnimation = m_Animations["down"];
-		this->velocity = { speedX, speedY };
-		IsMoving = true;
-	}
-}
-
-void Player::stop()
-{
-	this->m_AnimatedSprite.stop();
-	return;
-}
-
-void Player::attack(EntityBase * other_entity)
-{
-	other_entity = NULL;
-	if(true)
-	{
-		currentAnimation = m_Animations["attack_left"];
-	}
-	else {
-		currentAnimation = m_Animations["attack_right"];
-	}
-
-}
-
-void Player::update(float dt)
-{
-	sf::Time frameTime = sf::seconds(dt);
-	m_AnimatedSprite.play(currentAnimation);
-	m_AnimatedSprite.move(this->velocity* frameTime.asSeconds());
-	
-	m_Pos = m_AnimatedSprite.getPosition();
-
-	velocity = { 0.0f, 0.0f };
-	if (this->getState() == EntityState::Dying)
-	{
-		currentAnimation = m_Animations["died_left"];
-	}
-
-
-
-	m_AnimatedSprite.update(frameTime);
-
-	//m_PlayerSprite.setPosition(m_PlayerPos);
-}
+//void Player::draw(sf::RenderWindow& window, float dt)
+//{
+//	//window.draw(this->m_AnimatedSprite);
+//	return;
+//}
+//
+//void Player::update(float dt)
+//{
+//	//m_AnimatedSprite.play(currentAnimation);
+//	//this->m_AnimatedSprite.update(sf::seconds(dt));
+//}
 
 Player::~Player()
 {
+}
+
+void Player::handleInput(std::string input)
+{
+	if (input == "MoveLeft") {
+		Character::move(DIRECTION::LEFT);
+	}
+	else if (input == "MoveRight") {
+		Character::move(DIRECTION::RIGHT);
+	}
+	else if (input == "Jump") {
+		Character::jump();
+	}
+	else if (input == "Attack") {
+		//Character::attack();
+	}
 }

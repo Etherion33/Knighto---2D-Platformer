@@ -84,9 +84,6 @@
     <ClCompile Include="src\Animation.cpp">
       <Filter>Header Files\Libraries</Filter>
     </ClCompile>
-    <ClCompile Include="src\Animation_Handler.cpp">
-      <Filter>Header Files\Libraries</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game_State_Game_Over.cpp">
       <Filter>Source Files\Game_States</Filter>
     </ClCompile>
@@ -115,6 +112,12 @@
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="src\Collider.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Item.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Weapon.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,8 +185,15 @@
     <ClInclude Include="include\Game_State_Game_Over.h">
       <Filter>Header Files\Game_States</Filter>
     </ClInclude>
+    <ClInclude Include="include\Item.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Weapon.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

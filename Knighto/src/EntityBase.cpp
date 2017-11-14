@@ -1,10 +1,10 @@
 #include "../include/EntityBase.h"
 #include "../include/Entity_Manager.h"
 #include "../include/Level.h"
+#include "../include/Tile.h"
 
-EntityBase::EntityBase(Entity_Manager* enmgr)
+EntityBase::EntityBase()
 	:
-	m_entityManager(enmgr),
 	m_Name("BaseEntity"),
 	m_enType(EntityType::Base), m_Id(0), m_referenceTile(nullptr),
 	m_enState(EntityState::Idle),
@@ -19,6 +19,7 @@ void EntityBase::setId(unsigned int id)
 
 void EntityBase::setPosition(float l_x, float l_y) {
 	m_Pos = sf::Vector2f(l_x, l_y);
+	this->m_AnimatedSprite.setPosition(m_Pos);
 	UpdateAABB();
 }
 
@@ -53,7 +54,7 @@ const sf::Vector2f& EntityBase::getPosition()const { return m_Pos; }
 void EntityBase::move(float l_x, float l_y) {
 	m_oldPos = m_Pos;
 	m_Pos += sf::Vector2f(l_x, l_y);
-	sf::Vector2u mapSize;
+	sf::Vector2u mapSize = { 32,32};
 	if (m_Pos.x < 0) {
 		m_Pos.x = 0;
 	}
@@ -114,7 +115,7 @@ void EntityBase::UpdateAABB() {
 
 void EntityBase::CheckCollisions()
 {
-
+	
 }
 
 void EntityBase::ResolveCollisions()
@@ -139,6 +140,24 @@ void EntityBase::draw(sf::RenderWindow & window, float dt)
 
 void EntityBase::update(const float dt)
 {
-
+	float gravity = 25.f;
+	accelerate(0, gravity);
+	addVelocity(m_Acceleration.x * dt, m_Acceleration.y * dt);
+	setAcceleration(0.0f, 0.0f);
+	sf::Vector2f frictionValue;
+	if (m_referenceTile) {
+		frictionValue = m_referenceTile->m_friction;
+		if (m_referenceTile->m_deadly) { setState(EntityState::Dying); }
+	}
+	else {
+		frictionValue = m_friction;
+	}
+	float friction_x = (m_Speed.x * 0.8f) * dt;
+	float friction_y = (m_Speed.y * 0.0f) * dt;
+	applyFriction(friction_x, friction_y);
+	sf::Vector2f deltaPos = m_Velocity * dt;
+	move(deltaPos.x, deltaPos.y);
+	m_AnimatedSprite.move(deltaPos);
 	m_AnimatedSprite.update(sf::seconds(dt));
+	m_Velocity = { 1.0f, 1.0f };
 }

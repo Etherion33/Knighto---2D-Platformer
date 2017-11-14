@@ -46,12 +46,12 @@ void Game::loadTiles()
 	staticAnim["brick"].setSpriteSheet(texmgr.getRef("tileset"));
 	staticAnim["brick"].addFrame(sf::IntRect(8, 168, 8, 8));
 
-	this->tileAtlas["air"] = Tile(staticAnim["air"], TileType::AIR, { 0.f,0.f });
-	this->tileAtlas["grass"] = Tile(staticAnim["grass"], TileType::GRASS, { 0.f,0.f });
-	this->tileAtlas["dirt"] = Tile(staticAnim["dirt"], TileType::DIRT, { 0.f,0.f });
-	this->tileAtlas["forest"] = Tile(staticAnim["forest"], TileType::FOREST, { 0.f,0.f });
-	this->tileAtlas["water"] = Tile(staticAnim["water"], TileType::WATER, { 0.f,0.f });
-	this->tileAtlas["brick"] = Tile(staticAnim["brick"], TileType::BRICK, { 0.f,0.f });
+	this->tileAtlas["air"] = Tile(staticAnim["air"], TileType::AIR, { 0.f,0.f }, { 0.0f,0.0f });
+	this->tileAtlas["grass"] = Tile(staticAnim["grass"], TileType::GRASS, { 0.f,0.f }, { 0.8f,0.0f });
+	this->tileAtlas["dirt"] = Tile(staticAnim["dirt"], TileType::DIRT, { 0.f,0.f }, { 0.8f,0.0f });
+	this->tileAtlas["forest"] = Tile(staticAnim["forest"], TileType::FOREST, { 0.f,0.f }, { 0.8f,0.0f });
+	this->tileAtlas["water"] = Tile(staticAnim["water"], TileType::WATER, { 0.f,0.f }, { 0.8f,0.8f });
+	this->tileAtlas["brick"] = Tile(staticAnim["brick"], TileType::BRICK, { 0.f,0.f }, { 0.5f,0.0f });
 }
 
 void Game::pushState(Game_State* state)

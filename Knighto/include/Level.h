@@ -13,7 +13,6 @@ class Level
 {
 private:
 	std::vector<Tile> tiles;
-	Entity_Manager* entityManager;
 public:
 
 	int m_width, m_height;
@@ -27,7 +26,6 @@ public:
 	void load(const std::string& filename, std::map<std::string, Tile>& tileAtlas);
 	void save(const std::string & filename);
 	void create(const std::string& filename, unsigned int width, unsigned int height, std::map<std::string, Tile>& tileAtlas);
-	void addEntity(Player* entity);
 
 	void update(float dt);
 	void draw(sf::RenderWindow& window, float dt);

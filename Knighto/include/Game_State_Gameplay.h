@@ -7,6 +7,7 @@
 #include "Level.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Weapon.h"
 
 enum class ActionState { NONE, PANNING };
 

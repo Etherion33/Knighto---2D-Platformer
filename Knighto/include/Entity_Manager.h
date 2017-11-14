@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "EntityBase.h"
-#include "Player.h"
 
 using EntityContainer = std::vector<EntityBase*>;
 
@@ -14,6 +13,7 @@ public:
 	void add(EntityBase* e);
 	EntityBase* getById(unsigned int id);
 	EntityBase* getByName(const std::string& name);
+	int enCount();
 	void Remove(unsigned int id);
 	void destroyAll();
 

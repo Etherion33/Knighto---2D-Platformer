@@ -14,7 +14,6 @@ void Game_State_Gameplay::draw(const float dt)
 
 	this->game->window.setView(this->gameView);
 	level.draw(this->game->window, dt);
-	player->draw(this->game->window, dt);
 	this->game->entmgr.draw(this->game->window, dt);
 }
 
@@ -25,13 +24,16 @@ void Game_State_Gameplay::update(const float dt)
 	sf::Vector2f pos(0.f, 0.f);
 	ImGui::SFML::Update(this->game->window, sf::seconds(dt));
 	this->gameView.setCenter(player->getPosition());
-	this->player->update(dt);
+	//this->player->update(dt);
 	this->level.update(dt);
 	this->game->entmgr.update(dt);
 	ImGui::Begin("Debug window");
 	ImGui::Text("FPS: %lf", 1.f / dt);
 	ImGui::Text("Window position: X : %d", this->game->window.getPosition().x); ImGui::SameLine(200); ImGui::Text("Y: %d", this->game->window.getPosition().y);
 	ImGui::Text("Player position: X : %lf", this->player->getPosition().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", this->player->getPosition().y);
+	ImGui::Text("Player velocity: X : %lf", this->player->getSpeed().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", this->player->getSpeed().y);
+	ImGui::Text("Player size: X : %lf", this->player->getSize()); ImGui::SameLine(220); ImGui::Text("Y: %lf", this->player->getSize().y);
+
 	ImGui::Text("Player state: %d", this->player->getState());
 	ImGui::Text("Level width: %d", level.m_width); ImGui::SameLine(220); ImGui::Text(" height: %d", level.m_height);
 	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
@@ -96,28 +98,15 @@ void Game_State_Gameplay::handleInput()
 		case sf::Event::KeyPressed:
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				player->setState(EntityState::Walking);
-				player->move(-player->getSpeed().x, 0);
+				player->handleInput("MoveLeft");
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				player->setState(EntityState::Walking);
-				player->move(player->getSpeed().x, 0);
+				player->handleInput("MoveRight");
 				noKeyWasPressed = false;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				player->setState(EntityState::Walking);
-				player->move(0, -player->getSpeed().y);
-				noKeyWasPressed = false;
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){ 
-				player->setState(EntityState::Walking);
-				player->move(0, player->getSpeed().y);
-				noKeyWasPressed = false;
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-				player->setState(EntityState::Attacking);
-
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+				player->handleInput("Jump");
 				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
@@ -138,7 +127,7 @@ void Game_State_Gameplay::handleInput()
 
 			if (noKeyWasPressed)
 			{
-				player->stop();
+				// stop player animation
 			}
 			noKeyWasPressed = true;
 			break;
@@ -160,18 +149,20 @@ Game_State_Gameplay::Game_State_Gameplay(Game* game, std::string selectedLevel)
 	this->guiView.setCenter(pos);
 
 	level = Level(selectedLevel, game->tileAtlas);
-	player = new Player(&this->game->entmgr, this->game->texmgr.getRef("knightSS"));
+	player = new Player(this->game->texmgr.getRef("knightSS"));
 	this->game->entmgr.add(player);
-	this->game->entmgr.add(new Enemy(nullptr, this->game->texmgr.getRef("orcSS"), { 100.f,100.f }));
-	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS"), { 125.f,100.f }));
-	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS"), { 150.f,100.f }));
-	this->game->entmgr.add(new Enemy(&this->game->entmgr, this->game->texmgr.getRef("orcSS"), { 170.f,100.f }));
-
-	EntityBase* monster = this->game->entmgr.getByName("Knighto");
-	std::cout << monster->getName();
-	//player = Player(this->game->entmgr, this->game->texmgr.getRef("knightSS"));
+	this->game->entmgr.add(new Enemy(EnemyType::Orc,this->game->texmgr.getRef("orcSS"), { 100.f,100.f }));
+	this->game->entmgr.add(new Enemy(EnemyType::Skeleton,this->game->texmgr.getRef("orcSS"), { 125.f,100.f }));
+	this->game->entmgr.add(new Enemy(EnemyType::Goblin,this->game->texmgr.getRef("orcSS"), { 150.f,100.f }));
+	this->game->entmgr.add(new Weapon(WeaponType::SWORD));
 	player->setPosition({ 50.f,this->level.m_height*0.5f });
 
+	for (int i=0; i<this->game->entmgr.enCount(); i++)
+	{
+		std::cout << "Monster: "<< this->game->entmgr.getById(i)->getName() << std::endl;
+		std::cout << "ID:"<< this->game->entmgr.getById(i)->getId()<< std::endl;
+
+	}
 	//sf::Vector2f center(player->getPlayerPos().x*0.5, player->getPlayerPos().y*0.5);
 	//gameView.setCenter(center);
 
