@@ -8,13 +8,12 @@ void Level::loadByText(const std::string & filename, std::map<std::string, Tile>
 	std::ifstream inputFile;
 	inputFile.open(filename, std::ios::in);
 	if (inputFile.is_open()) {
-
 		inputFile >> this->m_width;
 		inputFile >> this->m_height;
 
-		for (int pos = 0; pos < this->m_width * this->m_height; ++pos)
+		for (int pos = 0; pos < this->m_width * this->m_height* this->m_TileSize; ++pos)
 		{
-			int type =0;
+			int type = 0;
 			inputFile >> type;
 			switch (type)
 			{
@@ -103,11 +102,11 @@ void Level::create(const std::string& filename, unsigned int width, unsigned int
 			sf::Vector2f pos;
 			pos.x = x * this->m_TileSize;
 			pos.y = y * this->m_TileSize;
-			if(y==0){
+			if (y == 0) {
 				this->tiles.push_back(tileAtlas.at("brick"));
 				this->tiles[y*this->m_width + x].m_TileType = TileType::BRICK;
 			}
-			else if(y == (this->m_height - 1)){
+			else if (y == (this->m_height - 1)) {
 				this->tiles.push_back(tileAtlas.at("brick"));
 				this->tiles[y*this->m_width + x].m_TileType = TileType::BRICK;
 				this->tiles[y*this->m_width + x].isSolid = true;
@@ -116,7 +115,6 @@ void Level::create(const std::string& filename, unsigned int width, unsigned int
 				this->tiles.push_back(tileAtlas.at("air"));
 				this->tiles[y*this->m_width + x].m_TileType = TileType::AIR;
 				this->tiles[y*this->m_width + x].isSolid = false;
-
 			}
 		}
 	}
@@ -130,7 +128,7 @@ void Level::create(const std::string& filename, unsigned int width, unsigned int
 	for (auto tile : this->tiles)
 	{
 		outputFile.write((char*)&tile.m_TileType, sizeof(int));
-		outputFileText <<(int)tile.m_TileType;
+		outputFileText << (int)tile.m_TileType;
 	}
 	outputFile.close();
 	outputFileText.close();
@@ -171,12 +169,13 @@ void Level::draw(sf::RenderWindow& window, float dt)
 	}
 }
 
-bool Level::isColliding(const Player & other)
-{
-	return false;
-}
 
 Tile Level::GetTile(unsigned int l_x, unsigned int l_y)
 {
 	return this->tiles[l_y* this->m_width + l_x];
+}
+
+Tile Level::GetDefaultTile()
+{
+	return this->tiles[0];
 }

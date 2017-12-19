@@ -11,6 +11,7 @@ public:
 	virtual void draw(const float dt);
 	virtual void update(const float dt);
 	virtual void handleInput();
+	virtual void show_debug(const float dt);
 
 	Game_State_Menu(Game* game);
 

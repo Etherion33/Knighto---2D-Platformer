@@ -1,15 +1,14 @@
 #include "../include/Character.h"
 #include <iostream>
+
 enum class EnitityState { Idle, Walking, Attacking, Jumping, Dying };
 
-
-Character::Character()
-	: EntityBase()
+Character::Character(Entity_Manager * entmgr)
+	: EntityBase(entmgr)
 {
 	m_health = 100;
 	m_jumpVelocity = 250;
 }
-
 
 Character::~Character()
 {
@@ -35,10 +34,6 @@ void Character::update(const float dt)
 			setState(EntityState::Idle);
 		}
 	}
-	system("cls");
-	std::cout << "Delta Time:" << dt << std::endl;
-	std::cout << "Entity acceleration x: " << m_Acceleration.x << "\ty: " << m_Acceleration.y << std::endl;
-	std::cout << "Entity acceleration x: " << m_Speed.x << "\ty: " << m_Speed.y << std::endl;
 
 	m_AnimatedSprite.play(currentAnimation);
 	m_AnimatedSprite.setPosition(m_Pos);
@@ -47,7 +42,7 @@ void Character::update(const float dt)
 
 void Character::move(const DIRECTION& dir)
 {
-	if (getState() == EntityState::Dying) return; 
+	if (getState() == EntityState::Dying) return;
 	if (dir == DIRECTION::LEFT)
 	{
 		currentAnimation = m_Animations["left"];
@@ -99,5 +94,4 @@ void Character::animate()
 
 void Character::OnEntityCollision(EntityBase * eb_collider, bool b_attack)
 {
-
 }

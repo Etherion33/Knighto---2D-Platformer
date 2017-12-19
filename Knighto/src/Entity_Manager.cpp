@@ -1,11 +1,10 @@
 #include "../include/Entity_Manager.h"
+#include <iostream>
 
 Entity_Manager::Entity_Manager()
 {
 	m_nOfEntities = 0;
-
 }
-
 
 Entity_Manager::~Entity_Manager()
 {
@@ -40,7 +39,6 @@ int Entity_Manager::enCount()
 	return m_nOfEntities;
 }
 
-
 void Entity_Manager::destroyAll()
 {
 	m_entities.clear();
@@ -50,7 +48,7 @@ void Entity_Manager::draw(sf::RenderWindow & window, float dt)
 {
 	for (EntityBase* e : m_entities)
 	{
-		e->draw(window,dt);
+		e->draw(window, dt);
 	}
 	//player.draw(window,dt);
 }
@@ -62,4 +60,15 @@ void Entity_Manager::update(float dt)
 		e->update(dt);
 	}
 	//player.update(dt);
+	return;
+}
+
+void Entity_Manager::setLevel(Level* l_level)
+{
+	m_level = l_level;
+}
+
+Level* Entity_Manager::getData()
+{
+	return m_level;
 }

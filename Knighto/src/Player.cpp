@@ -1,8 +1,8 @@
 #include "../include/Player.h"
 #include <iostream>
 
-Player::Player(const sf::Texture& spritesheet)
-	: Character()
+Player::Player(Entity_Manager* entmgr,const sf::Texture& spritesheet)
+	: Character(entmgr)
 {
 	this->m_enType = EntityType::Player;
 	this->m_Name = "Knighto";
@@ -38,8 +38,8 @@ Player::Player(const sf::Texture& spritesheet)
 	this->m_Animations["down"].addFrame(sf::IntRect(0, 0, 24, 24));
 
 	this->m_Animations["attack_left"].setSpriteSheet(spritesheet);
-	this->m_Animations["attack_left"].addFrame(sf::IntRect(72,0,24,24));
-	this->m_Animations["attack_left"].addFrame(sf::IntRect(96, 0, 24,24 ));
+	this->m_Animations["attack_left"].addFrame(sf::IntRect(72, 0, 24, 24));
+	this->m_Animations["attack_left"].addFrame(sf::IntRect(96, 0, 24, 24));
 	this->m_Animations["attack_left"].addFrame(sf::IntRect(120, 0, 24, 24));
 
 	this->m_Animations["attack_right"].setSpriteSheet(spritesheet);
@@ -48,7 +48,7 @@ Player::Player(const sf::Texture& spritesheet)
 	this->m_Animations["attack_right"].addFrame(sf::IntRect(72, 72, 24, 24));
 
 	this->m_Animations["got_hurt_right"].setSpriteSheet(spritesheet);
-	this->m_Animations["got_hurt_right"].addFrame(sf::IntRect(144,0,24,24));
+	this->m_Animations["got_hurt_right"].addFrame(sf::IntRect(144, 0, 24, 24));
 	this->m_Animations["got_hurt_right"].addFrame(sf::IntRect(168, 0, 24, 24));
 
 	this->m_Animations["got_hurt_left"].setSpriteSheet(spritesheet);
@@ -67,7 +67,7 @@ Player::Player(const sf::Texture& spritesheet)
 	m_Pos.x = 50.f;
 	m_Pos.y = 50.f;
 
-	this->m_AnimatedSprite =  AnimatedSprite(sf::seconds(0.2), true, false);
+	this->m_AnimatedSprite = AnimatedSprite(sf::seconds(0.2), true, false);
 	//m_PlayerSprite.setPosition(m_PlayerPos);
 	this->m_AnimatedSprite.setPosition(m_Pos);
 }

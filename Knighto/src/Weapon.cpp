@@ -1,6 +1,6 @@
 #include "../include/Weapon.h"
 
-Weapon::Weapon(WeaponType wepType) : Item()
+Weapon::Weapon(Entity_Manager * entmgr, WeaponType wepType) : Item(entmgr)
 {
 	m_wepType = wepType;
 	switch (m_wepType)
@@ -17,7 +17,6 @@ Weapon::Weapon(WeaponType wepType) : Item()
 		break;
 	}
 }
-
 
 void Weapon::update(float dt)
 {

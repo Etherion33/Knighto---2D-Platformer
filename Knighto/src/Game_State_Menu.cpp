@@ -11,6 +11,10 @@ char new_level_filename[255];
 static bool create_level_window = false;
 static bool load_level_window = false;
 
+void Game_State_Menu::show_debug(const float dt)
+{
+
+}
 void Game_State_Menu::draw(const float dt)
 {
 	this->game->window.clear(sf::Color::Black);
@@ -179,6 +183,7 @@ void Game_State_Menu::loadgame(std::string filename)
 {
 	std::cout << "Loaded level:" << filename << std::endl;
 	this->game->pushState(new Game_State_Gameplay(this->game, filename));
+	return;
 }
 
 void Game_State_Menu::editLevel()

@@ -13,6 +13,7 @@ public:
 	virtual void draw(const float dt);
 	virtual void update(const float dt);
 	virtual void handleInput();
+	virtual void show_debug(const float dt);
 
 	void load_level(bool* p_open);
 	void edit_level(Game* game, bool* p_open);

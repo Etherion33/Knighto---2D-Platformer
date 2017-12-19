@@ -3,16 +3,17 @@
 #include "AnimatedSprite.h"
 #include "Tile.h"
 
-enum class EntityType{Base , Enemy, Player, Weapon};
-enum class EntityState{Idle, Walking, Jumping, Attacking, Hurt, Dying};
+enum class EntityType { Base, Enemy, Player, Weapon };
+enum class EntityState { Idle, Walking, Jumping, Attacking, Hurt, Dying };
 
 struct TileInfo;
 
 struct CollisionElement {
-	CollisionElement(float f_area, TileInfo* tileInfo, const sf::FloatRect& fr_Bounds)
-		:m_area(f_area),m_tile(tileInfo), m_tileBounds(fr_Bounds){}
-		float m_area;
-	TileInfo* m_tile;
+	CollisionElement(float f_area, bool isSolid, const sf::FloatRect& fr_Bounds)
+		:m_area(f_area), m_isSolid(isSolid), m_tileBounds(fr_Bounds) {}
+	float m_area;
+	bool m_isSolid;
+	Tile* m_tile;
 	sf::FloatRect m_tileBounds;
 };
 
@@ -22,7 +23,7 @@ class Entity_Manager;
 class EntityBase
 {
 public:
-	EntityBase();
+	EntityBase(Entity_Manager* entmgr);
 	virtual ~EntityBase();
 
 	const sf::Vector2f& getPosition() const;
@@ -33,6 +34,7 @@ public:
 	EntityType getType() const;
 
 	sf::Vector2f getSpeed() { return m_Velocity; }
+	sf::Vector2f getAcceleration() { return m_Acceleration; }
 
 	void setId(unsigned int id);
 	void setPosition(float f_X, float f_Y);

@@ -172,6 +172,7 @@
     <ClInclude Include="include\Level.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Resource_Manager.h" />
+    <ClInclude Include="include\SharedData.h" />
     <ClInclude Include="include\Sound_Manager.h" />
     <ClInclude Include="include\Texture_Manager.h" />
     <ClInclude Include="include\Tile.h" />
@@ -179,7 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

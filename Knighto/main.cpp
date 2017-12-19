@@ -4,8 +4,8 @@
 
 int main()
 {
-	Game game;
-	game.pushState(new Game_State_Menu(&game));
-	game.run();
+	Game game; //create game object
+	game.pushState(new Game_State_Menu(&game)); //push game state into Menu State
+	game.run(); //main loop
 	return EXIT_SUCCESS;
 }

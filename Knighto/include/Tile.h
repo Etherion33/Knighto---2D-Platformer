@@ -18,6 +18,6 @@ public:
 	void draw(sf::RenderWindow& window, float dt);
 	void update();
 	Tile() {}
-	Tile(Animation& tileAnimation, const TileType tileType, sf::Vector2f tilePos,sf::Vector2f friction);
+	Tile(Animation& tileAnimation, const TileType tileType, sf::Vector2f tilePos, sf::Vector2f friction);
 	bool isSolid;
 };

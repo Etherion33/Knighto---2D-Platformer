@@ -13,5 +13,6 @@ public:
 	virtual void draw(const float dt) = 0;
 	virtual void update(const float dt) = 0;
 	virtual void handleInput() = 0;
+	virtual void show_debug(const float dt) = 0;
 };
 #endif // !GAME_STATE_H

@@ -4,7 +4,7 @@ class Item :
 	public EntityBase
 {
 public:
-	Item();
+	Item(Entity_Manager * entmgr);
 	~Item();
 
 	virtual void draw(sf::RenderWindow & window, float dt);
@@ -12,4 +12,3 @@ public:
 
 	virtual void OnEntityCollision(EntityBase* eb_collider, bool b_attack);
 };
-

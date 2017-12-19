@@ -8,7 +8,6 @@
 #include <imgui-SFML.h>
 #include "Texture_Manager.h"
 #include "Entity_Manager.h"
-#include "EntityBase.h"
 #include "Tile.h"
 //#include "Player.h"
 
@@ -19,8 +18,6 @@ class Game
 private:
 	void loadTextures();
 	void loadTiles();
-	void loadPlayer();
-
 public:
 	const static int tileSize = 16;
 	std::stack<Game_State*> states;
@@ -29,7 +26,6 @@ public:
 	Texture_Manager texmgr;
 	Entity_Manager entmgr;
 	sf::Sprite background;
-
 	std::map<std::string, Tile> tileAtlas;
 	//std::map<std::string, Player> playerAtlas;
 

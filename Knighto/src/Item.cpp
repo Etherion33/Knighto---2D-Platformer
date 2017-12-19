@@ -1,12 +1,8 @@
 #include "../include/Item.h"
 
-
-
-Item::Item() : EntityBase()
+Item::Item(Entity_Manager * entmgr) : EntityBase(entmgr)
 {
-
 }
-
 
 Item::~Item()
 {
@@ -22,5 +18,4 @@ void Item::update(const float dt)
 
 void Item::OnEntityCollision(EntityBase * eb_collider, bool b_attack)
 {
-
 }

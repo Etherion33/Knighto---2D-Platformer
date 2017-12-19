@@ -4,15 +4,14 @@
 #include <string>
 #include <vector>
 
-#include "Game.h"
+//#include "Game.h"
 #include "Tile.h"
-#include "Player.h"
-#include "Entity_Manager.h"
 
 class Level
 {
 private:
 	std::vector<Tile> tiles;
+	//Player * player;
 public:
 
 	int m_width, m_height;
@@ -29,8 +28,9 @@ public:
 
 	void update(float dt);
 	void draw(sf::RenderWindow& window, float dt);
-	bool isColliding(const Player& other);
+	//bool isColliding(const Player& other);
 	Tile GetTile(unsigned int l_x, unsigned int l_y);
+	Tile GetDefaultTile();
 	Level()
 	{
 		this->m_TileSize = 8;
@@ -42,8 +42,8 @@ public:
 	Level(const std::string& filename, std::map<std::string, Tile>& tileAtlas)
 	{
 		this->m_TileSize = 8;
-			//load(filename, width, height, tileAtlas);
-			//load(filename, tileAtlas);
+		//load(filename, width, height, tileAtlas);
+		//load(filename, tileAtlas);
 		loadByText(filename, tileAtlas);
 	}
 };

@@ -5,15 +5,14 @@
 
 enum class DIRECTION { LEFT, RIGHT, UP, DOWN };
 
-class Character: public EntityBase
+class Character : public EntityBase
 {
 protected:
 	unsigned int m_health;
 	float m_jumpVelocity;
 
-
 public:
-	Character();
+	Character(Entity_Manager* entmgr);
 	virtual ~Character();
 
 	virtual void draw(sf::RenderWindow & window, float dt);
@@ -23,4 +22,3 @@ public:
 	void animate();
 	virtual void OnEntityCollision(EntityBase* eb_collider, bool b_attack);
 };
-

@@ -191,9 +191,11 @@
     <ClInclude Include="include\Weapon.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="include\SharedData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram3.cd" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

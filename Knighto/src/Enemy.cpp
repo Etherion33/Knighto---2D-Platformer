@@ -1,27 +1,26 @@
 #include "../include/Enemy.h"
 
-Enemy::Enemy(EnemyType eType,const sf::Texture& spritesheet, sf::Vector2f enemyPos)
-	:Character()
+Enemy::Enemy(Entity_Manager* entmgr,EnemyType eType, const sf::Texture& spritesheet, sf::Vector2f enemyPos)
+	:Character(entmgr)
 {
 	this->m_enType = EntityType::Enemy;
 	this->m_enemyType = eType;
-	
+
 	switch (m_enemyType)
 	{
-		case EnemyType::Orc:
-		{
-			m_Name = "Orc";
-			break;
-		}
-		case EnemyType::Skeleton:
-			m_Name = "Skeleton";
-			break;
-		case EnemyType::Goblin:
-			m_Name = "Goblin";
-			break;
-		
+	case EnemyType::Orc:
+	{
+		m_Name = "Orc";
+		break;
 	}
-	
+	case EnemyType::Skeleton:
+		m_Name = "Skeleton";
+		break;
+	case EnemyType::Orc_Shaman:
+		m_Name = "Orc Shaman";
+		break;
+	}
+
 	this->m_Animations["idle"].setSpriteSheet(spritesheet);
 	this->m_Animations["idle"].addFrame(sf::IntRect(20, 0, 20, 20));
 
@@ -44,4 +43,3 @@ void Enemy::draw(sf::RenderWindow & window, float dt)
 	window.draw(this->m_AnimatedSprite);
 	return;
 }
-

@@ -1,5 +1,10 @@
 #include "..\include\Game_State_Game_Over.h"
 
+void Game_State_Game_Over::show_debug(const float dt)
+{
+
+}
+
 void Game_State_Game_Over::draw(const float dt)
 {
 	this->game->window.clear(sf::Color::Black);
@@ -48,7 +53,6 @@ void Game_State_Game_Over::handleInput()
 	}
 
 	return;
-
 }
 
 Game_State_Game_Over::Game_State_Game_Over(Game * game)

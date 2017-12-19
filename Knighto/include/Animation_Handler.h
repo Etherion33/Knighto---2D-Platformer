@@ -48,5 +48,4 @@ public:
 	}
 };
 
-
 #endif // !ANIMATION_HANDLER_H

@@ -9,7 +9,7 @@
 class Player : public Character
 {
 public:
-	Player(const sf::Texture& spritesheet);
+	Player(Entity_Manager* entmgr, const sf::Texture& spritesheet);
 	~Player();
 	void handleInput(std::string input);
 };

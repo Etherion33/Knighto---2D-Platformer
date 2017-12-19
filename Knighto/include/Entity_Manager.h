@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "EntityBase.h"
+#include "Level.h"
 
 using EntityContainer = std::vector<EntityBase*>;
 
@@ -16,12 +17,14 @@ public:
 	int enCount();
 	void Remove(unsigned int id);
 	void destroyAll();
-
+	
 	void draw(sf::RenderWindow & window, float dt);
 	void update(float dt);
 
+	void setLevel(Level* l_gs);
+	Level* getData();
 private:
 	EntityContainer m_entities;
+	Level * m_level;
 	unsigned int m_nOfEntities;
 };
-

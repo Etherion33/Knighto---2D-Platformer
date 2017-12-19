@@ -20,13 +20,17 @@ private:
 	sf::View gameView;
 	sf::View guiView;
 
-	Level level;
-	Player* player;
 public:
+	Level* level;
+	Player* player;
+	Entity_Manager* entmgr;
 	virtual void draw(const float dt);
 	virtual void update(const float dt);
 	virtual void handleInput();
+	virtual void show_debug(const float dt);
 
+	Player * getPlayer() { return player; }
+	Level * getLevel() { return level; }
 	Game_State_Gameplay(Game* game, std::string level);
 };
 #endif // !GAME_STATE_GAMEPLAY_H

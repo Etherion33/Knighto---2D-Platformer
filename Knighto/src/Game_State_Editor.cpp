@@ -162,6 +162,11 @@ void Game_State_Editor::handleInput()
 	return;
 }
 
+void Game_State_Editor::show_debug(const float dt)
+{
+
+}
+
 Game_State_Editor::Game_State_Editor(Game * game)
 {
 	ImGui::NewFrame();
@@ -279,7 +284,7 @@ void Game_State_Editor::edit_level(Game* game, bool *p_open)
 			tile = m_Level.GetTile(x, y);
 			new_tileType = (int)tile.m_TileType;
 			ImGui::Image(tile.m_TileSprite);
-			//ImGui::Text("%d", new_tileType); 
+			//ImGui::Text("%d", new_tileType);
 			//ImGui::InputTextMultiline("pole:", &new_tileType,m_Level.m_height * m_Level.m_width);
 		}
 		ImGui::SameLine(10.f);

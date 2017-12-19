@@ -5,7 +5,6 @@
 
 #include "../include/Game.h"
 #include "../include/Game_State.h"
-#include "../include/Player.h"
 
 void Game::loadTextures()
 {
@@ -16,6 +15,8 @@ void Game::loadTextures()
 	texmgr.load("orc", "Res/Textures/orc.png");
 	texmgr.load("knightSS", "Res/Textures/knight_outline.png");
 	texmgr.load("orcSS", "Res/Textures/orc_middle_outline.png");
+	texmgr.load("shaman", "Res/Textures/Shaman/shaman.png");
+	texmgr.load("shamanSS", "Res/Textures/Shaman/shaman_outline.png");
 	texmgr.load("tileset", "Res/Textures/tileset.png");
 	texmgr.load("background", "Res/Textures/bg.png");
 }
