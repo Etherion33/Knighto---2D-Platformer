@@ -111,9 +111,6 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="src\Collider.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
     <ClCompile Include="src\Item.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
@@ -163,9 +160,6 @@
     </ClInclude>
     <ClInclude Include="include\Game_State_Gameplay.h">
       <Filter>Header Files\Game_States</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Collider.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Enemy.h">
       <Filter>Header Files\Characters</Filter>

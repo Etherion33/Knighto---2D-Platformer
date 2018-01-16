@@ -274,16 +274,15 @@ void Game_State_Editor::edit_level(Game* game, bool *p_open)
 		ImGui::EndGroup();
 		ImGui::EndPopup();
 	}
-	Tile tile;
 
 	for (int y = 0; y < m_Level.m_height; y++)
 	{
 		for (int x = 0; x < m_Level.m_width; x++)
 		{
 			static int new_tileType;
-			tile = m_Level.GetTile(x, y);
-			new_tileType = (int)tile.m_TileType;
-			ImGui::Image(tile.m_TileSprite);
+			Tile * tile = m_Level.GetTile(x, y);
+			new_tileType = (int)tile->m_TileType;
+			ImGui::Image(tile->m_TileSprite);
 			//ImGui::Text("%d", new_tileType);
 			//ImGui::InputTextMultiline("pole:", &new_tileType,m_Level.m_height * m_Level.m_width);
 		}

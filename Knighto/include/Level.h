@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <map>
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -13,9 +14,9 @@ private:
 	std::vector<Tile> tiles;
 	//Player * player;
 public:
-
+	std::vector<sf::Vector2i> monsterSpawns;
 	int m_width, m_height;
-	sf::Vector2f m_startPos;
+	sf::Vector2i m_startPos;
 	unsigned int m_TileSize;
 
 	//void load(const std::string& filename, unsigned int width, unsigned int height, std::map<std::string, Tile>& tileAtlas);
@@ -29,8 +30,9 @@ public:
 	void update(float dt);
 	void draw(sf::RenderWindow& window, float dt);
 	//bool isColliding(const Player& other);
-	Tile GetTile(unsigned int l_x, unsigned int l_y);
-	Tile GetDefaultTile();
+	unsigned int ConvertCoords(unsigned int l_x, unsigned int l_y);
+	Tile* GetTile(unsigned int l_x, unsigned int l_y);
+	Tile* GetDefaultTile();
 	Level()
 	{
 		this->m_TileSize = 8;

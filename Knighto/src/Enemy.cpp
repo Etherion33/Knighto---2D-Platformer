@@ -1,45 +1,34 @@
 #include "../include/Enemy.h"
 
-Enemy::Enemy(Entity_Manager* entmgr,EnemyType eType, const sf::Texture& spritesheet, sf::Vector2f enemyPos)
-	:Character(entmgr)
+Enemy::Enemy(Entity_Manager* entmgr,EnemyType eType, const sf::Texture& spritesheet)
+	:Character(entmgr,spritesheet)
 {
 	this->m_enType = EntityType::Enemy;
 	this->m_enemyType = eType;
 
 	switch (m_enemyType)
 	{
-	case EnemyType::Orc:
-	{
-		m_Name = "Orc";
-		break;
-	}
-	case EnemyType::Skeleton:
-		m_Name = "Skeleton";
-		break;
-	case EnemyType::Orc_Shaman:
-		m_Name = "Orc Shaman";
-		break;
+		case EnemyType::Orc:
+		{
+			m_Name = "Orc";
+			this->m_health = 50;
+			this->setSize(20, 20);
+			break;
+		}
+		case EnemyType::Orc_Shaman: {
+			m_Name = "Orc Shaman";
+			this->m_health = 125;
+			this->setSize(24, 24);
+			break;
+		}	
 	}
 
-	this->m_Animations["idle"].setSpriteSheet(spritesheet);
-	this->m_Animations["idle"].addFrame(sf::IntRect(20, 0, 20, 20));
-
-	this->m_Pos = enemyPos;
+	this->m_Velocity = { 10.f , 10.f };
+	this->m_maxVelocity = { 30.f,30.f };
+	this->m_Speed = { 15.f,15.f };
 
 	this->currentAnimation = this->m_Animations["idle"];
-
+	this->m_enState = EntityState::Idle;
 	this->m_AnimatedSprite = AnimatedSprite(sf::seconds(0.2), true, false);
 	this->m_AnimatedSprite.setPosition(m_Pos);
-}
-
-void Enemy::update(float dt)
-{
-	m_AnimatedSprite.play(currentAnimation);
-	this->m_AnimatedSprite.update(sf::seconds(dt));
-}
-
-void Enemy::draw(sf::RenderWindow & window, float dt)
-{
-	window.draw(this->m_AnimatedSprite);
-	return;
 }

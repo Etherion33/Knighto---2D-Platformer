@@ -37,7 +37,7 @@ void Game::loadTiles()
 	staticAnim["dirt"].addFrame(sf::IntRect(16, 24, 8, 8));
 	staticAnim["dirt"].addFrame(sf::IntRect(24, 24, 8, 8));
 	staticAnim["forest"].setSpriteSheet(texmgr.getRef("tileset"));
-	staticAnim["forest"].addFrame(sf::IntRect(0, 48, 8, 8));
+	staticAnim["forest"].addFrame(sf::IntRect(112, 0, 8, 8));
 	staticAnim["water"].setSpriteSheet(texmgr.getRef("tileset"));
 	staticAnim["water"].addFrame(sf::IntRect(0, 104, 8, 8));
 	staticAnim["water"].addFrame(sf::IntRect(8, 104, 8, 8));
@@ -53,6 +53,10 @@ void Game::loadTiles()
 	this->tileAtlas["forest"] = Tile(staticAnim["forest"], TileType::FOREST, { 0.f,0.f }, { 0.8f,0.0f });
 	this->tileAtlas["water"] = Tile(staticAnim["water"], TileType::WATER, { 0.f,0.f }, { 0.8f,0.8f });
 	this->tileAtlas["brick"] = Tile(staticAnim["brick"], TileType::BRICK, { 0.f,0.f }, { 0.5f,0.0f });
+
+	this->tileAtlas["playerSpawn"] = Tile(staticAnim["grass"], TileType::PLAYER_SPAWN, { 0.f,0.f }, { 0.0f,0.0f });
+	this->tileAtlas["monsterSpawn"] = Tile(staticAnim["forest"], TileType::MONSTER_SPAWN, { 0.f,0.f }, { 0.0f,0.0f });
+
 }
 
 void Game::pushState(Game_State* state)

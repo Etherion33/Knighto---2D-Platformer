@@ -10,9 +10,9 @@ class Character : public EntityBase
 protected:
 	unsigned int m_health;
 	float m_jumpVelocity;
-
+	DIRECTION direct;
 public:
-	Character(Entity_Manager* entmgr);
+	Character(Entity_Manager* entmgr, const sf::Texture& spritesheet);
 	virtual ~Character();
 
 	virtual void draw(sf::RenderWindow & window, float dt);

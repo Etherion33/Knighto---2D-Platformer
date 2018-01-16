@@ -2,11 +2,12 @@
 #include <SFML\Graphics.hpp>
 #include "AnimatedSprite.h"
 
-enum class TileType { AIR, GRASS, WATER, FOREST, DIRT, BRICK };
+enum class TileType { AIR, GRASS, WATER, FOREST, DIRT, BRICK, PLAYER_SPAWN, MONSTER_SPAWN };
 
 class Tile
 {
 public:
+	unsigned int m_TileId;
 	sf::Sprite m_TileSprite;
 	sf::Vector2f m_TilePos;
 	Animation m_TileAnimation;

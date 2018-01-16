@@ -13,16 +13,14 @@ void Game_State_Gameplay::show_debug(const float dt)
 	ImGui::Begin("Debug window");
 	ImGui::Text("FPS: %lf", 1.f / dt);
 	ImGui::Text("Window position: X : %d", this->game->window.getPosition().x); ImGui::SameLine(200); ImGui::Text("Y: %d", this->game->window.getPosition().y);
-	ImGui::Text("Player position: X : %lf", entmgr->getByName("Knighto")->getPosition().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getPosition().y);
+	ImGui::Text("Player position: X : %lf", entmgr->getByName("Knighto")->getPosition().x/8); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getPosition().y/8);
 	ImGui::Text("Player velocity: X : %lf",entmgr->getByName("Knighto")->getSpeed().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getSpeed().y);
-	ImGui::Text("Player size: X : %lf", entmgr->getByName("Knighto")->getSize()); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getSize().y);
-	ImGui:
-	ImGui::Text("Player state: %d",entmgr->getByName("Knighto")->getState());
+	ImGui::Text("Player size: X : %lf", entmgr->getByName("Knighto")->getSize().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getSize().y);
+	ImGui::Text("Player collision on X: %d", entmgr->getByName("Knighto")->getCollision().x); ImGui::SameLine(220); ImGui::Text("Y: %d", entmgr->getByName("Knighto")->getCollision().y);
+	ImGui::Text("Player state: %d", entmgr->getByName("Knighto")->getState());
 	ImGui::Text("Level width: %d", level->m_width); ImGui::SameLine(220); ImGui::Text(" height: %d", level->m_height);
-	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
-
+	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x/8, io.MousePos.y/8);
 	ImGui::End();
-	std::cout << "Entity acceleration x: " << entmgr->getByName("Knighto")->getAcceleration().x << "\ty: " << entmgr->getByName("Knighto")->getAcceleration().y << std::endl;
 }
 
 void Game_State_Gameplay::draw(const float dt)
@@ -80,37 +78,21 @@ void Game_State_Gameplay::handleInput()
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				player->handleInput("MoveLeft");											// move player to the left
-				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 				player->handleInput("MoveRight");											// move player to the right
-				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				player->handleInput("Jump");					
-				noKeyWasPressed = false;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				player->setState(EntityState::Attacking);
-
-				noKeyWasPressed = false;
+				player->handleInput("Attack");
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
 				player->setState(EntityState::Dying);
 				this->game->pushState(new Game_State_Game_Over(this->game));
-				noKeyWasPressed = false;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				player->setState(EntityState::Jumping);
-			}
-
-			if (noKeyWasPressed)
-			{
-				// stop player animation
-			}
-			noKeyWasPressed = true;
 			break;
 		}
 		default: break;
@@ -135,18 +117,23 @@ Game_State_Gameplay::Game_State_Gameplay(Game* game, std::string selectedLevel)
 	player = new Player(entmgr,this->game->texmgr.getRef("knightSS"));
 
 	entmgr->add(player);
-	entmgr->add(new Enemy(entmgr,EnemyType::Orc, this->game->texmgr.getRef("orcSS"), { 100.f,100.f }));
-	entmgr->add(new Enemy(entmgr,EnemyType::Skeleton, this->game->texmgr.getRef("orcSS"), { 125.f,100.f }));
-	entmgr->add(new Enemy(entmgr,EnemyType::Orc_Shaman, this->game->texmgr.getRef("shamanSS"), { 150.f,100.f }));
-	entmgr->add(new Weapon(entmgr,WeaponType::SWORD));
-
-	player->setPosition({ 50.f,level->m_height*0.5f });
-
+	//entmgr->add();
+	//entmgr->add(new Enemy(entmgr,EnemyType::Skeleton, this->game->texmgr.getRef("orcSS"), { 125.f,100.f }));
+	//entmgr->add(new Enemy(entmgr, EnemyType::Orc_Shaman, this->game->texmgr.getRef("shamanSS")));
+	//entmgr->add(new Weapon(entmgr,WeaponType::SWORD));
+	entmgr->getByName("Knighto")->setPosition({(float) level->m_startPos.x,(float) level->m_startPos.y });
+	for (int i =0; i < level->monsterSpawns.size() ; i++)
+	{
+		entmgr->add(new Enemy(entmgr, EnemyType::Orc, this->game->texmgr.getRef("orcSS")));
+		entmgr->getById(i + 1)->setPosition((float)level->monsterSpawns[i].x, (float)level->monsterSpawns[i].y);
+	}
 	for (int i = 0; i < entmgr->enCount(); i++)
 	{
 		std::cout << "Monster: " << entmgr->getById(i)->getName() << std::endl;
 		std::cout << "ID:" << entmgr->getById(i)->getId() << std::endl;
+		std::cout << "Position x: " << entmgr->getById(i)->getPosition().x << " y:" << entmgr->getById(i)->getPosition().y << std::endl;
 	}
+	std::cout << "Player starting position x:" << level->m_startPos.x << "y: " << level->m_startPos.y << std::endl;
 	//sf::Vector2f center(player->getPlayerPos().x*0.5, player->getPlayerPos().y*0.5);
 	//gameView.setCenter(center);
 

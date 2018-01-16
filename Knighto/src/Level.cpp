@@ -11,78 +11,46 @@ void Level::loadByText(const std::string & filename, std::map<std::string, Tile>
 		inputFile >> this->m_width;
 		inputFile >> this->m_height;
 
-		for (int pos = 0; pos < this->m_width * this->m_height* this->m_TileSize; ++pos)
+		for (int pos = 0; pos < this->m_width * this->m_height * this->m_TileSize; ++pos)
 		{
-			int type = 0;
-			inputFile >> type;
+			char type;
+			inputFile>>type;
 			switch (type)
 			{
 			default:
-			case 0:
+			case '.':
 				this->tiles.push_back(tileAtlas.at("air"));
 				break;
-			case 1:
+			case 'G':
 				this->tiles.push_back(tileAtlas.at("grass"));
 				break;
-			case 2:
+			case 'F':
 				this->tiles.push_back(tileAtlas.at("forest"));
 				break;
-			case 3:
+			case 'W':
 				this->tiles.push_back(tileAtlas.at("water"));
 				break;
-			case 4:
+			case 'D':
 				this->tiles.push_back(tileAtlas.at("dirt"));
 				break;
-			case 5:
+			case 'B':
 				this->tiles.push_back(tileAtlas.at("brick"));
+				break;
+			case 'P':
+				this->tiles.push_back(tileAtlas.at("playerSpawn"));
+				this->m_startPos = { pos / this->m_width , pos%this->m_width };
+				break;
+			case 'M':
+				this->tiles.push_back(tileAtlas.at("monsterSpawn"));
+				this->monsterSpawns.push_back({ pos / this->m_width , pos%this->m_width });
+				break;
+			case '\n':
 				break;
 			}
 			Tile& tile = this->tiles.back();
+			tile.m_TileId = pos;
 		}
 	}
-	inputFile.close();
-}
-
-void Level::load(const std::string & filename, std::map<std::string, Tile>& tileAtlas)
-{
-	std::ifstream inputFile;
-	inputFile.open(filename, std::ios::in | std::ios::binary);
-
-	//this->width = width;
-	//this->height = height;
-
-	inputFile.read((char*)&this->m_width, sizeof(int));
-	inputFile.read((char*)&this->m_height, sizeof(int));
-
-	for (int pos = 0; pos < this->m_width * this->m_height; ++pos)
-	{
-		TileType tileType;
-		inputFile.read((char*)&tileType, sizeof(int));
-		switch (tileType)
-		{
-		default:
-		case TileType::AIR:
-			this->tiles.push_back(tileAtlas.at("air"));
-			break;
-		case TileType::GRASS:
-			this->tiles.push_back(tileAtlas.at("grass"));
-			break;
-		case TileType::FOREST:
-			this->tiles.push_back(tileAtlas.at("forest"));
-			break;
-		case TileType::WATER:
-			this->tiles.push_back(tileAtlas.at("water"));
-			break;
-		case TileType::DIRT:
-			this->tiles.push_back(tileAtlas.at("dirt"));
-			break;
-		case TileType::BRICK:
-			this->tiles.push_back(tileAtlas.at("brick"));
-			break;
-		}
-		Tile& tile = this->tiles.back();
-	}
-
 	inputFile.close();
 }
 
@@ -149,6 +117,7 @@ void Level::save(const std::string & filename)
 
 void Level::update(float dt)
 {
+			
 }
 
 void Level::draw(sf::RenderWindow& window, float dt)
@@ -163,6 +132,13 @@ void Level::draw(sf::RenderWindow& window, float dt)
 			//this->tiles[y*this->width + x].m_TileSprite.setPosition(pos);
 			this->tiles[y*this->m_width + x].m_TileAnimatedSprite.setPosition(pos);
 			this->tiles[y*this->m_width + x].m_TilePos = pos;
+			if (this->tiles[y*this->m_width + x].m_TileType == TileType::BRICK || 
+				this->tiles[y*this->m_width + x].m_TileType == TileType::GRASS ||
+				this->tiles[y*this->m_width + x].m_TileType == TileType::DIRT  ||
+				this->tiles[y*this->m_width + x].m_TileType == TileType::FOREST) this->tiles[y*this->m_width + x].isSolid = true;
+			else {
+				this->tiles[y*this->m_width + x].isSolid = false;
+			}
 			/* Draw the tile */
 			this->tiles[y*this->m_width + x].draw(window, dt);
 		}
@@ -170,12 +146,17 @@ void Level::draw(sf::RenderWindow& window, float dt)
 }
 
 
-Tile Level::GetTile(unsigned int l_x, unsigned int l_y)
+unsigned int Level::ConvertCoords(unsigned int l_x, unsigned int l_y)
 {
-	return this->tiles[l_y* this->m_width + l_x];
+	return (l_y* this->m_width) + l_x;
 }
 
-Tile Level::GetDefaultTile()
+Tile* Level::GetTile(unsigned int l_x, unsigned int l_y)
 {
-	return this->tiles[0];
+	return &tiles[(l_y* this->m_width) + l_x];
+}
+
+Tile* Level::GetDefaultTile()
+{
+	return &Tile();
 }

@@ -5,6 +5,7 @@
 
 using EntityContainer = std::vector<EntityBase*>;
 
+class Texture_Manager;
 class Entity_Manager
 {
 public:
@@ -20,6 +21,7 @@ public:
 	
 	void draw(sf::RenderWindow & window, float dt);
 	void update(float dt);
+	Texture_Manager* m_texMgr;
 
 	void setLevel(Level* l_gs);
 	Level* getData();

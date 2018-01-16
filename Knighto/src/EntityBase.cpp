@@ -56,24 +56,29 @@ std::string EntityBase::getName()const { return m_Name; }
 EntityState EntityBase::getState()const { return m_enState; }
 unsigned int EntityBase::getId()const { return m_Id; }
 EntityType EntityBase::getType()const { return m_enType; }
+const sf::Vector2i & EntityBase::getCollision() const
+{
+	return { m_collidingOnX,m_collidingOnY };
+}
 const sf::Vector2f& EntityBase::getPosition()const { return m_Pos; }
 
 void EntityBase::move(float l_x, float l_y) {
 	m_oldPos = m_Pos;
 	m_Pos += sf::Vector2f(l_x, l_y);
-	sf::Vector2u mapSize = { 64,18 };
+	float TileSize = m_entityManager->getData()->m_TileSize;
+	sf::Vector2i mapSize = { m_entityManager->getData()->m_width ,m_entityManager->getData()->m_height };
 	if (m_Pos.x < 0) {
 		m_Pos.x = 0;
 	}
-	else if (m_Pos.x > (mapSize.x + 1) * 8) {
-		m_Pos.x = (mapSize.x + 1) * 8;
+	else if (m_Pos.x > (mapSize.x + 1) * TileSize) {
+		m_Pos.x = (mapSize.x + 1) * TileSize;
 	}
 
 	if (m_Pos.y < 0) {
 		m_Pos.y = 0;
 	}
-	else if (m_Pos.y > (mapSize.y + 1) * 8) {
-		m_Pos.y = (mapSize.y + 1) * 8;
+	else if (m_Pos.y > (mapSize.y+1) * TileSize) {
+		m_Pos.y = (mapSize.y+1)  * TileSize;
 		//setState(EntityState::Dying);
 	}
 
@@ -116,7 +121,7 @@ void EntityBase::applyFriction(float l_x, float l_y) {
 }
 
 void EntityBase::UpdateAABB() {
-	m_AABB = sf::FloatRect(m_Pos.x - (m_Size.x / 2), m_Pos.y - m_Size.y, m_Size.x, m_Size.y);
+	m_AABB = sf::FloatRect(m_Pos.x - (m_Size.x / 2.0f), m_Pos.y - m_Size.y, m_Size.x, m_Size.y);
 }
 
 void EntityBase::CheckCollisions()
@@ -127,13 +132,14 @@ void EntityBase::CheckCollisions()
 	int toX = floor((m_AABB.left + m_AABB.width) / tileSize);
 	int fromY = floor(m_AABB.top / tileSize);
 	int toY = floor((m_AABB.top + m_AABB.height) / tileSize);
-
-	for (int x = fromX; x <= toX; ++x) {
-		for (int y = fromY; y <= toY; ++y) {
-			Tile* tile = &gameLevel->GetTile(x, y);
-			if (!tile) { continue; }
-			std::cout << "Tile x: " << tile->m_TilePos.x  << " y: " << tile->m_TilePos.y << std::endl;
-			sf::FloatRect tileBounds(x * tileSize, y * tileSize, tileSize, tileSize);
+	
+	for (int y = fromY; y <= toY; ++y)
+	{
+		for (int x = fromX; x <= toX; ++x) 
+		{
+			Tile* tile = gameLevel->GetTile(abs(x), abs(y));
+			if (!tile || tile->isSolid == false ) { continue; }
+			sf::FloatRect tileBounds(x, y, tileSize, tileSize);
 			sf::FloatRect intersection;
 			m_AABB.intersects(tileBounds, intersection);
 			float area = intersection.width * intersection.height;
@@ -152,15 +158,12 @@ void EntityBase::ResolveCollisions()
 		unsigned int tileSize = gameMap->m_TileSize;
 		for (auto &itr : m_collisions) {
 			if (!m_AABB.intersects(itr.m_tileBounds)) { continue; }
-			//// Debug
-			//if (m_entityManager->GetContext()->m_debugOverlay.Debug()) {
-			//	sf::Vector2f tempPos(itr.m_tileBounds.left, itr.m_tileBounds.top);
-			//	sf::RectangleShape* rect = new sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
-			//	rect->setPosition(tempPos);
-			//	rect->setFillColor(sf::Color(255, 255, 0, 150));
-			//	m_entityManager->GetContext()->m_debugOverlay.Add(rect);
-			//}
-			//// End debug.
+			// Debug
+				sf::Vector2f tempPos(itr.m_tileBounds.left, itr.m_tileBounds.top);
+				sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
+				rect.setPosition(tempPos);
+				rect.setFillColor(sf::Color(255, 255, 0, 150));
+			// End debug.
 			float xDiff = (m_AABB.left + (m_AABB.width / 2)) - (itr.m_tileBounds.left + (itr.m_tileBounds.width / 2));
 			float yDiff = (m_AABB.top + (m_AABB.height / 2)) - (itr.m_tileBounds.top + (itr.m_tileBounds.height / 2));
 			float resolve = 0;
@@ -198,37 +201,41 @@ std::string EntityBase::stateToString()
 {
 	switch (this->m_enState)
 	{
-	case EntityState::Jumping: return "Jumping";
-	case EntityState::Attacking: return "Attacking";
+		case EntityState::Jumping: return "Jumping";
+		case EntityState::Walking: return "Walking";
+		case EntityState::Attacking: return "Attacking";
+		case EntityState::Idle: return "Idle";
+		case EntityState::Dying: return "Died";
+		default: return "Idle";
 	}
 }
 
 void EntityBase::draw(sf::RenderWindow & window, float dt)
 {
+	window.draw(rect);
 	window.draw(this->m_AnimatedSprite);
-	return;
 }
 
 void EntityBase::update(const float dt)
-{
+{	
 	Level* gameLevel = m_entityManager->getData();
-	float gravity = 2.0f;
-	accelerate(0, gravity);
+	float gravity = 512.0f;
+	accelerate(0.0f, gravity);
 	addVelocity(m_Acceleration.x * dt, m_Acceleration.y * dt);
 	setAcceleration(0.0f, 0.0f);
-	sf::Vector2f frictionValue;
+	sf::Vector2f frictionValue = { 0.8f,0.0f };
 	if (m_referenceTile) {
-		frictionValue = m_referenceTile->m_friction;
-		if (m_referenceTile->m_deadly) { setState(EntityState::Dying); }
+		frictionValue = { 0.4f, 0.0f};
+		//if (m_referenceTile->m_deadly) { setState(EntityState::Dying); }
 	}
 	else if (gameLevel->GetDefaultTile()) {
-
+		m_friction = { 0.4f, 0.0f };
 	}
 	else {
 		frictionValue = m_friction;
 	}
-	float friction_x = (m_Speed.x * 0.8f) * dt;
-	float friction_y = (m_Speed.y * 0.0f) * dt;
+	float friction_x = (m_Speed.x * frictionValue.x) * dt;
+	float friction_y = (m_Speed.y * frictionValue.y) * dt;
 	applyFriction(friction_x, friction_y);
 	sf::Vector2f deltaPos = m_Velocity * dt;
 	move(deltaPos.x, deltaPos.y);

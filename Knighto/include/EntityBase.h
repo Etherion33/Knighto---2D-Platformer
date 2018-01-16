@@ -32,6 +32,7 @@ public:
 	std::string getName() const;
 	unsigned int getId() const;
 	EntityType getType() const;
+	const sf::Vector2i& getCollision() const;
 
 	sf::Vector2f getSpeed() { return m_Velocity; }
 	sf::Vector2f getAcceleration() { return m_Acceleration; }
@@ -81,6 +82,8 @@ protected:
 
 	bool m_collidingOnX;
 	bool m_collidingOnY;
+
+	sf::RectangleShape rect;
 
 	Collisions m_collisions;
 	Entity_Manager* m_entityManager;
