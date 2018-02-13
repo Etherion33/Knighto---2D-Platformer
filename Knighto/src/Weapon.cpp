@@ -1,6 +1,6 @@
 #include "../include/Weapon.h"
 
-Weapon::Weapon(Entity_Manager * entmgr, WeaponType wepType) : Item(entmgr)
+Weapon::Weapon(Entity_Manager * entmgr, WeaponType wepType, const sf::Texture& spritesheet) : Item(entmgr,ItemType::WEAPON,spritesheet)
 {
 	m_wepType = wepType;
 	switch (m_wepType)

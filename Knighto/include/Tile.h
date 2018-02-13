@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "AnimatedSprite.h"
 
-enum class TileType { AIR, GRASS, WATER, FOREST, DIRT, BRICK, PLAYER_SPAWN, MONSTER_SPAWN };
+enum class TileType { AIR, GRASS, WATER, FOREST, DIRT, BRICK, PLAYER_SPAWN, MONSTER_SPAWN,ITEM, CHEST };
 
 class Tile
 {
@@ -15,6 +15,7 @@ public:
 	int m_TileSize;
 	sf::Vector2f m_friction;
 	bool m_deadly;
+	bool m_isVisible;
 	TileType m_TileType;
 	void draw(sf::RenderWindow& window, float dt);
 	void update();

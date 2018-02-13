@@ -7,6 +7,8 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include "Texture_Manager.h"
+#include "Font_Manager.h"
+#include "Sound_Manager.h"
 #include "Entity_Manager.h"
 #include "Tile.h"
 //#include "Player.h"
@@ -18,12 +20,16 @@ class Game
 private:
 	void loadTextures();
 	void loadTiles();
+	void loadFonts();
+	void loadSounds();
 public:
 	const static int tileSize = 16;
 	std::stack<Game_State*> states;
 
 	sf::RenderWindow window;
 	Texture_Manager texmgr;
+	Font_Manager fntmgr;
+	Sound_Manager sndmgr;
 	Entity_Manager entmgr;
 	sf::Sprite background;
 	std::map<std::string, Tile> tileAtlas;

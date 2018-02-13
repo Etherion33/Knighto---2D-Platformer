@@ -9,7 +9,7 @@ class Weapon :
 private:
 	WeaponType m_wepType;
 public:
-	Weapon(Entity_Manager * entmgr, WeaponType wepType);
+	Weapon(Entity_Manager * entmgr, WeaponType wepType, const sf::Texture& spritesheet);
 
 	void update(float dt);
 	void draw(sf::RenderWindow & window, float dt);

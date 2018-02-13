@@ -138,7 +138,6 @@
     <ClCompile Include="src\Font_Manager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Game_State.cpp" />
-    <ClCompile Include="src\Game_State_Editor.cpp" />
     <ClCompile Include="src\Game_State_Gameplay.cpp" />
     <ClCompile Include="src\Game_State_Game_Over.cpp" />
     <ClCompile Include="src\Game_State_Menu.cpp" />
@@ -162,7 +161,6 @@
     <ClInclude Include="include\Font_Manager.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Game_State.h" />
-    <ClInclude Include="include\Game_State_Editor.h" />
     <ClInclude Include="include\Game_State_Gameplay.h" />
     <ClInclude Include="include\Game_State_Game_Over.h" />
     <ClInclude Include="include\Game_State_Menu.h" />
@@ -175,9 +173,17 @@
     <ClInclude Include="include\Texture_Manager.h" />
     <ClInclude Include="include\Tile.h" />
     <ClInclude Include="include\Weapon.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="knight_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Knighto.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

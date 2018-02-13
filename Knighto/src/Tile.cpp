@@ -11,6 +11,10 @@ void Tile::draw(sf::RenderWindow & window, float dt)
 
 void Tile::update()
 {
+	if (this->m_TileType == TileType::CHEST)
+	{
+
+	}
 }
 
 Tile::Tile(Animation& tileAnimation, const TileType tileType, sf::Vector2f tilePos, sf::Vector2f friction)
@@ -20,5 +24,6 @@ Tile::Tile(Animation& tileAnimation, const TileType tileType, sf::Vector2f tileP
 	this->m_TileAnimation = tileAnimation;
 	this->m_TilePos = tilePos;
 	this->m_friction = friction;
-	this->m_TileAnimatedSprite = AnimatedSprite(sf::seconds(0.2), true, false);
+	this->m_TileAnimatedSprite = AnimatedSprite(sf::seconds(0.4), true, false);
+	this->m_isVisible = true;
 }

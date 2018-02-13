@@ -11,5 +11,8 @@ class Player : public Character
 public:
 	Player(Entity_Manager* entmgr, const sf::Texture& spritesheet);
 	~Player();
+	void update(float dt);
+	void OnEntityCollision(EntityBase* l_collider, bool l_attack);
 	void handleInput(std::string input);
+
 };

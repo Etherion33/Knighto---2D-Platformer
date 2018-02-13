@@ -4,12 +4,13 @@
 #include "../include/Game_State.h"
 #include "../include/Game_State_Menu.h"
 #include "../include/Game_State_Gameplay.h"
-#include "../include/Game_State_Editor.h"
 
 sf::Vector2i new_level_size(64, 16);
 char new_level_filename[255];
 static bool create_level_window = false;
 static bool load_level_window = false;
+static bool instruction_window = false;
+
 
 void Game_State_Menu::show_debug(const float dt)
 {
@@ -44,11 +45,15 @@ void Game_State_Menu::update(const float dt)
 		load_level_window = true;
 		//this->loadgame();
 	}
-	if (ImGui::Button("Level editor"))
+	if (ImGui::Button("How to play ?"))
 	{
-		this->editLevel();
-		return;
+		instruction_window = true;
 	}
+	//if (ImGui::Button("Level editor"))
+	//{
+	//	this->editLevel();
+	//	return;
+	//}
 	if (ImGui::Button("Exit game"))
 	{
 		this->game->window.close();
@@ -126,6 +131,16 @@ void Game_State_Menu::update(const float dt)
 		}
 		ImGui::End();
 	}
+	if (instruction_window)
+	{
+		ImGui::SetNextWindowSize(ImVec2(900, 400), ImGuiCond_FirstUseEver);
+		ImGui::Begin("Instructions", &instruction_window, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::Text("The Knighto is a classic platformer based on Mario concept, so the controls are not sopthisticated");
+		ImGui::Text("Use A and D or arrow keys to move left or right! Use Space to jump!");
+		ImGui::Text("Use Left Control or F to fight and strike your enemies!");
+		ImGui::Image(this->game->texmgr.getRef("keyboard"));
+		ImGui::End();
+	}
 	ImGui::End();
 	ImGui::ShowTestWindow();
 }
@@ -188,5 +203,5 @@ void Game_State_Menu::loadgame(std::string filename)
 
 void Game_State_Menu::editLevel()
 {
-	this->game->pushState(new Game_State_Editor(this->game));
+	//this->game->pushState(new Game_State_Editor(this->game));
 }

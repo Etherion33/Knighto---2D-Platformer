@@ -28,9 +28,13 @@ public:
 	virtual void update(const float dt);
 	virtual void handleInput();
 	virtual void show_debug(const float dt);
+	virtual void show_gui(const float dt);
 
 	Player * getPlayer() { return player; }
 	Level * getLevel() { return level; }
 	Game_State_Gameplay(Game* game, std::string level);
+	~Game_State_Gameplay();
+
+	bool loadEntities(Entity_Manager * entmgr,Level * level);
 };
 #endif // !GAME_STATE_GAMEPLAY_H

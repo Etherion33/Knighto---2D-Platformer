@@ -9,19 +9,58 @@
 void Game_State_Gameplay::show_debug(const float dt)
 {
 	ImGuiIO& io = ImGui::GetIO();
-
 	ImGui::Begin("Debug window");
 	ImGui::Text("FPS: %lf", 1.f / dt);
 	ImGui::Text("Window position: X : %d", this->game->window.getPosition().x); ImGui::SameLine(200); ImGui::Text("Y: %d", this->game->window.getPosition().y);
-	ImGui::Text("Player position: X : %lf", entmgr->getByName("Knighto")->getPosition().x/8); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getPosition().y/8);
+	ImGui::Text("Player position: X : %lf", entmgr->getByName("Knighto")->getPosition().x); ImGui::SameLine(300); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getPosition().y);
+	ImGui::Text("Player position / tileSize (8): X : %lf", entmgr->getByName("Knighto")->getPosition().x/8); ImGui::SameLine(300); ImGui::Text(" Y: %lf", entmgr->getByName("Knighto")->getPosition().y/8);
 	ImGui::Text("Player velocity: X : %lf",entmgr->getByName("Knighto")->getSpeed().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getSpeed().y);
 	ImGui::Text("Player size: X : %lf", entmgr->getByName("Knighto")->getSize().x); ImGui::SameLine(220); ImGui::Text("Y: %lf", entmgr->getByName("Knighto")->getSize().y);
 	ImGui::Text("Player collision on X: %d", entmgr->getByName("Knighto")->getCollision().x); ImGui::SameLine(220); ImGui::Text("Y: %d", entmgr->getByName("Knighto")->getCollision().y);
 	ImGui::Text("Player state: %d", entmgr->getByName("Knighto")->getState());
+	ImGui::Text("Player health: %d", entmgr->getByName("Knighto")->getHealth());
 	ImGui::Text("Level width: %d", level->m_width); ImGui::SameLine(220); ImGui::Text(" height: %d", level->m_height);
 	ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x/8, io.MousePos.y/8);
 	ImGui::End();
 }
+
+void Game_State_Gameplay::show_gui(const float dt)
+{
+	ImGuiStyle& style = ImGui::GetStyle();
+
+	if (ImGui::Begin("Player status", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings)) {
+		//style.Alpha = 0;
+		ImDrawList* draw_list = ImGui::GetWindowDrawList();
+		unsigned int playerHealth = entmgr->getByName("Knighto")->getHealth();
+		unsigned int playerScore = entmgr->getByName("Knighto")->getScore();
+		ImGui::SetWindowFontScale(2.f);
+		//ImGui::Text("HP:"); ImGui::SameLine(100.f); ImGui::Text("%d", playerHealth);
+		if (playerHealth >= 90)
+		{
+			ImGui::Image(this->game->texmgr.getRef("heart"), { 64.f,64.f }); ImGui::SameLine(64.f);
+			ImGui::Image(this->game->texmgr.getRef("heart"), { 64.f,64.f }); ImGui::SameLine(128.f);
+			ImGui::Image(this->game->texmgr.getRef("heart"), { 64.f,64.f });  ImGui::SameLine(196.f);
+		}
+		else if (playerHealth < 90 && playerHealth >= 50)
+		{
+			ImGui::Image(this->game->texmgr.getRef("heart"), { 64.f,64.f });  ImGui::SameLine(64.f);
+			ImGui::Image(this->game->texmgr.getRef("heart"), { 64.f,64.f });  ImGui::SameLine(128.f);
+		}
+		else if (playerHealth < 50)
+		{
+			ImGui::Image(this->game->texmgr.getRef("heart"), { 64.f,64.f });  ImGui::SameLine(64.f);
+		}
+		else {
+
+		}
+		ImGui::SameLine(200.f);
+		ImGui::Text("Points: %d", playerScore); ImGui::SameLine(400.f); ImGui::Text("Level: %s", level->m_levelName.c_str());
+		
+	}
+	ImGui::End();
+}
+
+
 
 void Game_State_Gameplay::draw(const float dt)
 {
@@ -37,11 +76,14 @@ void Game_State_Gameplay::draw(const float dt)
 void Game_State_Gameplay::update(const float dt)
 {
 	ImGui::SFML::Update(this->game->window, sf::seconds(dt));				//ImGui update - needed for drawing gui
-	this->gameView.setCenter(player->getPosition());	//set camera on player (scrolling view)
+	this->gameView.setCenter(entmgr->getByName("Knighto")->getPosition());	//set camera on player (scrolling view)
 	//this->player->update(dt);
 	//this->level->update(dt);			//update level(animations)
+	level->update(dt);
 	entmgr->update(dt);	//update all entities 
+	show_gui(dt);
 	show_debug(dt); //show debug window
+	//ImGui::ShowTestWindow();
 	return;
 }
 
@@ -76,22 +118,25 @@ void Game_State_Gameplay::handleInput()
 			/* if Key was pressed */
 		case sf::Event::KeyPressed:
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 				player->handleInput("MoveLeft");											// move player to the left
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				player->handleInput("MoveRight");											// move player to the right
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				player->handleInput("Jump");					
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
 				player->handleInput("Attack");
 			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-				player->setState(EntityState::Dying);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
 				this->game->pushState(new Game_State_Game_Over(this->game));
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+				entmgr->getByName("Knighto")->setPosition({(float)this->level->m_startPos.x,(float) this->level->m_startPos.y});
+				entmgr->getByName("Knighto")->setState(EntityState::Idle);
+				entmgr->getByName("Knighto")->resetHP();
 			}
 			break;
 		}
@@ -114,26 +159,16 @@ Game_State_Gameplay::Game_State_Gameplay(Game* game, std::string selectedLevel)
 
 	level = new Level(selectedLevel,this->game->tileAtlas);
 	entmgr->setLevel(level);
-	player = new Player(entmgr,this->game->texmgr.getRef("knightSS"));
+	
+	if (loadEntities(entmgr, level)) { std::cout << "\nEntities loaded !" << std::endl; }
+	else { std::cerr << "Error occured while loading entities!" << std::endl; }
 
-	entmgr->add(player);
-	//entmgr->add();
-	//entmgr->add(new Enemy(entmgr,EnemyType::Skeleton, this->game->texmgr.getRef("orcSS"), { 125.f,100.f }));
-	//entmgr->add(new Enemy(entmgr, EnemyType::Orc_Shaman, this->game->texmgr.getRef("shamanSS")));
-	//entmgr->add(new Weapon(entmgr,WeaponType::SWORD));
-	entmgr->getByName("Knighto")->setPosition({(float) level->m_startPos.x,(float) level->m_startPos.y });
-	for (int i =0; i < level->monsterSpawns.size() ; i++)
-	{
-		entmgr->add(new Enemy(entmgr, EnemyType::Orc, this->game->texmgr.getRef("orcSS")));
-		entmgr->getById(i + 1)->setPosition((float)level->monsterSpawns[i].x, (float)level->monsterSpawns[i].y);
-	}
 	for (int i = 0; i < entmgr->enCount(); i++)
 	{
 		std::cout << "Monster: " << entmgr->getById(i)->getName() << std::endl;
 		std::cout << "ID:" << entmgr->getById(i)->getId() << std::endl;
 		std::cout << "Position x: " << entmgr->getById(i)->getPosition().x << " y:" << entmgr->getById(i)->getPosition().y << std::endl;
 	}
-	std::cout << "Player starting position x:" << level->m_startPos.x << "y: " << level->m_startPos.y << std::endl;
 	//sf::Vector2f center(player->getPlayerPos().x*0.5, player->getPlayerPos().y*0.5);
 	//gameView.setCenter(center);
 
@@ -144,4 +179,51 @@ Game_State_Gameplay::Game_State_Gameplay(Game* game, std::string selectedLevel)
 	//player->setPosition(centre);
 
 	this->actionState = ActionState::NONE;
+}
+
+Game_State_Gameplay::~Game_State_Gameplay()
+{
+	level = nullptr;
+	player = nullptr;
+	entmgr = nullptr;
+	delete level;
+	delete player;
+	delete entmgr;
+}
+
+bool Game_State_Gameplay::loadEntities(Entity_Manager * entmgr, Level * level)
+{
+	if (entmgr != nullptr && level != nullptr)
+	{
+		player = new Player(entmgr, this->game->texmgr.getRef("knightSS"));
+		std::cout << "Player starting position x:" << level->m_startPos.x << "y: " << level->m_startPos.y << std::endl;
+		player->setPosition({ (float)level->m_startPos.x,(float)level->m_startPos.y });
+		entmgr->add(player);
+		if (level->monsterSpawns.size() > 0 || level->itemSpawns.size() > 0)
+		{
+			int monsterSpawns = level->monsterSpawns.size() - 1;
+			do
+			{
+				Enemy* enemy = new Enemy(entmgr, EnemyType::Orc_Shaman, this->game->texmgr.getRef("shamanSS"));
+				enemy->setPosition((float)level->monsterSpawns[monsterSpawns].x, (float)level->monsterSpawns[monsterSpawns].y);
+				entmgr->add(enemy);
+				monsterSpawns--;
+			} while (monsterSpawns >= 0);
+
+			int itemSpawns = level->itemSpawns.size() - 1;
+			do
+			{
+				Item * item = new Item(entmgr, ItemType::WEAPON, this->game->texmgr.getRef("coin"));
+				item->setPosition((float)level->itemSpawns[itemSpawns].x, (float)level->itemSpawns[itemSpawns].y);
+				entmgr->add(item);
+				itemSpawns--;
+			} while (itemSpawns >= 0);
+			return true;
+		}
+		else {
+			std::cout << "No entities found!";
+			return true;
+		}
+	}
+	return false;
 }

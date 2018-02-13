@@ -3,14 +3,14 @@
 #include "AnimatedSprite.h"
 #include "Tile.h"
 
-enum class EntityType { Base, Enemy, Player, Weapon };
+enum class EntityType { Base, Enemy, Player,Item};
 enum class EntityState { Idle, Walking, Jumping, Attacking, Hurt, Dying };
 
 struct TileInfo;
 
 struct CollisionElement {
-	CollisionElement(float f_area, bool isSolid, const sf::FloatRect& fr_Bounds)
-		:m_area(f_area), m_isSolid(isSolid), m_tileBounds(fr_Bounds) {}
+	CollisionElement(float f_area, Tile* tile, const sf::FloatRect& fr_Bounds)
+		:m_area(f_area), m_tile(tile), m_tileBounds(fr_Bounds) {}
 	float m_area;
 	bool m_isSolid;
 	Tile* m_tile;
@@ -53,12 +53,16 @@ public:
 
 	virtual void draw(sf::RenderWindow & window, float dt);
 	virtual void update(const float dt);
-protected:
+	virtual unsigned int getHealth() = 0;
+public:
 	void UpdateAABB();
 	void CheckCollisions();
 	void ResolveCollisions();
 
 	virtual void OnEntityCollision(EntityBase* eb_collider, bool b_attack) = 0;
+	virtual unsigned int getScore() = 0;
+	virtual void setScore(unsigned int points) = 0;
+	virtual void resetHP() = 0;
 
 	std::string m_Name;
 	EntityType m_enType;

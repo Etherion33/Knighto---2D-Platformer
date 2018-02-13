@@ -10,7 +10,6 @@ void Game::loadTextures()
 {
 	texmgr.load("grass", "Res/Textures/grass.png");
 	texmgr.load("wood", "Res/Textures/wood.png");
-
 	texmgr.load("knight", "Res/Textures/wood.png");
 	texmgr.load("orc", "Res/Textures/orc.png");
 	texmgr.load("knightSS", "Res/Textures/knight_outline.png");
@@ -19,6 +18,10 @@ void Game::loadTextures()
 	texmgr.load("shamanSS", "Res/Textures/Shaman/shaman_outline.png");
 	texmgr.load("tileset", "Res/Textures/tileset.png");
 	texmgr.load("background", "Res/Textures/bg.png");
+	texmgr.load("heart", "Res/Textures/heart.png");
+	texmgr.load("coin", "Res/Textures/coin.png");
+	texmgr.load("keyboard", "Res/Textures/keyboard.png");
+
 }
 
 void Game::loadTiles()
@@ -47,6 +50,9 @@ void Game::loadTiles()
 	staticAnim["brick"].setSpriteSheet(texmgr.getRef("tileset"));
 	staticAnim["brick"].addFrame(sf::IntRect(8, 168, 8, 8));
 
+	staticAnim["chest"].setSpriteSheet(texmgr.getRef("tileset"));
+	staticAnim["chest"].addFrame(sf::IntRect(24, 224, 8, 8));
+
 	this->tileAtlas["air"] = Tile(staticAnim["air"], TileType::AIR, { 0.f,0.f }, { 0.0f,0.0f });
 	this->tileAtlas["grass"] = Tile(staticAnim["grass"], TileType::GRASS, { 0.f,0.f }, { 0.8f,0.0f });
 	this->tileAtlas["dirt"] = Tile(staticAnim["dirt"], TileType::DIRT, { 0.f,0.f }, { 0.8f,0.0f });
@@ -54,8 +60,29 @@ void Game::loadTiles()
 	this->tileAtlas["water"] = Tile(staticAnim["water"], TileType::WATER, { 0.f,0.f }, { 0.8f,0.8f });
 	this->tileAtlas["brick"] = Tile(staticAnim["brick"], TileType::BRICK, { 0.f,0.f }, { 0.5f,0.0f });
 
-	this->tileAtlas["playerSpawn"] = Tile(staticAnim["grass"], TileType::PLAYER_SPAWN, { 0.f,0.f }, { 0.0f,0.0f });
-	this->tileAtlas["monsterSpawn"] = Tile(staticAnim["forest"], TileType::MONSTER_SPAWN, { 0.f,0.f }, { 0.0f,0.0f });
+	this->tileAtlas["playerSpawn"] = Tile(staticAnim["air"], TileType::PLAYER_SPAWN, { 0.f,0.f }, { 0.0f,0.0f });
+	this->tileAtlas["monsterSpawn"] = Tile(staticAnim["air"], TileType::MONSTER_SPAWN, { 0.f,0.f }, { 0.0f,0.0f });
+	this->tileAtlas["chest"] = Tile(staticAnim["chest"], TileType::CHEST, { 0.f,0.f }, { 0.0f,0.0f });
+	this->tileAtlas["itemSpawn"] = Tile(staticAnim["air"], TileType::ITEM, { 0.f,0.f }, { 0.0f,0.0f });
+
+}
+
+void Game::loadFonts()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	io.Fonts->Clear();
+	io.Fonts->AddFontFromFileTTF("Res/Fonts/rs.ttf", 24.f);
+	io.Fonts->AddFontFromFileTTF("Res/Fonts/mario_font.ttf", 12.f);
+	io.Fonts->AddFontFromFileTTF("Res/Fonts/comic.ttf", 12.f);
+	ImGui::SFML::UpdateFontTexture();
+
+	fntmgr.load("comic", "Res/Fonts/comic.ttf");
+	fntmgr.load("mario", "Res/Fonts/mario_font.ttf");
+	fntmgr.load("runescape", "Res/Fonts/rs.ttf");
+}
+
+void Game::loadSounds()
+{
 
 }
 
@@ -105,14 +132,14 @@ void Game::run()
 
 Game::Game()
 {
-	this->loadTextures();
-	this->loadTiles();
-	//this->loadFonts();	//TODO
-	//this->loadSounds();
-
 	this->window.create(sf::VideoMode(1024, 768), "Knighto - 2D Platformer");
 	this->window.setFramerateLimit(60);
 	ImGui::SFML::Init(this->window);
+
+	this->loadTextures();
+	this->loadTiles();
+	this->loadFonts();	
+	this->loadSounds();
 
 	this->background.setTexture(this->texmgr.getRef("background"));
 }

@@ -15,6 +15,9 @@ private:
 	//Player * player;
 public:
 	std::vector<sf::Vector2i> monsterSpawns;
+	std::vector<sf::Vector2i> chestSpawns;
+	std::vector<sf::Vector2i> itemSpawns;
+	std::string m_levelName;
 	int m_width, m_height;
 	sf::Vector2i m_startPos;
 	unsigned int m_TileSize;

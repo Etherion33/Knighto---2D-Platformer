@@ -47,7 +47,7 @@ void EntityBase::setAcceleration(float l_x, float l_y) {
 }
 
 void EntityBase::setState(const EntityState& l_state) {
-	if (m_enState == EntityState::Dying) { return; }
+	//if (m_enState == EntityState::Dying) { return; }  // debug
 	m_enState = l_state;
 }
 
@@ -77,9 +77,9 @@ void EntityBase::move(float l_x, float l_y) {
 	if (m_Pos.y < 0) {
 		m_Pos.y = 0;
 	}
-	else if (m_Pos.y > (mapSize.y+1) * TileSize) {
-		m_Pos.y = (mapSize.y+1)  * TileSize;
-		//setState(EntityState::Dying);
+	else if (m_Pos.y > (mapSize.y) * TileSize) {
+		m_Pos.y = (mapSize.y)  * TileSize;
+		this->setState(EntityState::Dying);
 	}
 
 	UpdateAABB();
@@ -121,7 +121,7 @@ void EntityBase::applyFriction(float l_x, float l_y) {
 }
 
 void EntityBase::UpdateAABB() {
-	m_AABB = sf::FloatRect(m_Pos.x - (m_Size.x / 2.0f), m_Pos.y - m_Size.y, m_Size.x, m_Size.y);
+	m_AABB = sf::FloatRect(m_Pos.x - (m_Size.x / 2.0f)+ 20, m_Pos.y - m_Size.y + 20, m_Size.x, m_Size.y);
 }
 
 void EntityBase::CheckCollisions()
@@ -138,13 +138,13 @@ void EntityBase::CheckCollisions()
 		for (int x = fromX; x <= toX; ++x) 
 		{
 			Tile* tile = gameLevel->GetTile(abs(x), abs(y));
-			if (!tile || tile->isSolid == false ) { continue; }
-			sf::FloatRect tileBounds(x, y, tileSize, tileSize);
+			if (!tile) { continue; }
+			sf::FloatRect tileBounds(x * tileSize, y * tileSize, tileSize, tileSize);
 			sf::FloatRect intersection;
 			m_AABB.intersects(tileBounds, intersection);
 			float area = intersection.width * intersection.height;
 
-			CollisionElement e(area, tile->isSolid, tileBounds);
+			CollisionElement e(area, tile, tileBounds);
 			m_collisions.emplace_back(e);
 		}
 	}
@@ -157,12 +157,12 @@ void EntityBase::ResolveCollisions()
 		Level* gameMap = m_entityManager->getData();
 		unsigned int tileSize = gameMap->m_TileSize;
 		for (auto &itr : m_collisions) {
-			if (!m_AABB.intersects(itr.m_tileBounds)) { continue; }
+			if (!m_AABB.intersects(itr.m_tileBounds) || itr.m_tile->m_TileType == TileType::AIR || itr.m_tile->m_TileType == TileType::PLAYER_SPAWN || itr.m_tile->m_TileType == TileType::MONSTER_SPAWN || itr.m_tile->m_TileType == TileType::ITEM || (itr.m_tile->m_TileType == TileType::CHEST && itr.m_tile->m_isVisible != false)) { continue; }
 			// Debug
 				sf::Vector2f tempPos(itr.m_tileBounds.left, itr.m_tileBounds.top);
-				sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
+				/*sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(tileSize, tileSize));
 				rect.setPosition(tempPos);
-				rect.setFillColor(sf::Color(255, 255, 0, 150));
+				rect.setFillColor(sf::Color(255, 255, 0, 150));*/
 			// End debug.
 			float xDiff = (m_AABB.left + (m_AABB.width / 2)) - (itr.m_tileBounds.left + (itr.m_tileBounds.width / 2));
 			float yDiff = (m_AABB.top + (m_AABB.height / 2)) - (itr.m_tileBounds.top + (itr.m_tileBounds.height / 2));
@@ -212,28 +212,28 @@ std::string EntityBase::stateToString()
 
 void EntityBase::draw(sf::RenderWindow & window, float dt)
 {
-	window.draw(rect);
 	window.draw(this->m_AnimatedSprite);
+	window.draw(this->rect);
 }
 
 void EntityBase::update(const float dt)
 {	
 	Level* gameLevel = m_entityManager->getData();
-	float gravity = 512.0f;
+	float gravity = 100.0f; // 512
 	accelerate(0.0f, gravity);
 	addVelocity(m_Acceleration.x * dt, m_Acceleration.y * dt);
 	setAcceleration(0.0f, 0.0f);
-	sf::Vector2f frictionValue = { 0.8f,0.0f };
-	if (m_referenceTile) {
-		frictionValue = { 0.4f, 0.0f};
-		//if (m_referenceTile->m_deadly) { setState(EntityState::Dying); }
-	}
-	else if (gameLevel->GetDefaultTile()) {
-		m_friction = { 0.4f, 0.0f };
-	}
-	else {
-		frictionValue = m_friction;
-	}
+	sf::Vector2f frictionValue = { 0.4f,0.0f };
+	//if (m_referenceTile) {
+	//	frictionValue = { 0.4f, 0.0f};
+	//	//if (m_referenceTile->m_deadly) { setState(EntityState::Dying); }
+	//}
+	//else if (gameLevel->GetDefaultTile()) {
+	//	m_friction = { 0.4f, 0.0f };
+	//}
+	//else {
+	//	frictionValue = m_friction;
+	//}
 	float friction_x = (m_Speed.x * frictionValue.x) * dt;
 	float friction_y = (m_Speed.y * frictionValue.y) * dt;
 	applyFriction(friction_x, friction_y);
