@@ -219,5 +219,6 @@ Tile* Level::GetTile(unsigned int l_x, unsigned int l_y)
 
 Tile* Level::GetDefaultTile()
 {
-	return &Tile();
+	Tile* tile = new Tile();
+	return tile;
 }

@@ -33,6 +33,7 @@ void Game_State_Game_Over::draw(const float dt)
 void Game_State_Game_Over::update(const float dt)
 {
 	ImGui::SFML::Update(this->game->window, sf::seconds(dt));				//ImGui update - needed for drawing gui
+	ImGui::EndFrame();
 	return;
 }
 
@@ -42,7 +43,7 @@ void Game_State_Game_Over::handleInput()
 
 	while (this->game->window.pollEvent(event))
 	{
-		ImGui::SFML::ProcessEvent(event);
+		ImGui::SFML::ProcessEvent(this->game->window, event);
 
 		switch (event.type)
 		{

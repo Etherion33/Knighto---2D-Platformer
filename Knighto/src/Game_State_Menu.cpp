@@ -95,7 +95,7 @@ void Game_State_Menu::update(const float dt)
 		std::vector<int> level_filesize;
 
 		int nLevels = 0;
-		for (auto &p : std::experimental::filesystem::directory_iterator("."))
+		for (auto &p : std::filesystem::directory_iterator("."))
 		{
 			fname = p.path().string();
 			if (fname.find(".dat") != std::string::npos)
@@ -103,7 +103,7 @@ void Game_State_Menu::update(const float dt)
 				std::cout << fname << std::endl;
 				fname = fname.substr(2, fname.size());
 				level_filenames.push_back(fname);
-				level_filesize.push_back(std::experimental::filesystem::file_size(p));
+				level_filesize.push_back(std::filesystem::file_size(p));
 				nLevels++;
 			}
 		}
@@ -142,7 +142,8 @@ void Game_State_Menu::update(const float dt)
 		ImGui::End();
 	}
 	ImGui::End();
-	ImGui::ShowTestWindow();
+	ImGui::ShowDemoWindow();
+	ImGui::EndFrame();
 }
 
 void Game_State_Menu::handleInput()
@@ -151,8 +152,7 @@ void Game_State_Menu::handleInput()
 
 	while (this->game->window.pollEvent(event))
 	{
-		ImGui::SFML::ProcessEvent(event);
-
+		ImGui::SFML::ProcessEvent(this->game->window, event);
 		switch (event.type)
 		{
 			/* Close the window */
@@ -185,7 +185,7 @@ void Game_State_Menu::handleInput()
 
 Game_State_Menu::Game_State_Menu(Game* game)
 {
-	ImGui::NewFrame();
+	//ImGui::NewFrame();
 
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());

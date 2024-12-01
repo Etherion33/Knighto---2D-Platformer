@@ -114,26 +114,36 @@ Game_State* Game::peekState()
 void Game::run()
 {
 	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	sf::Time mTimePerFrame = sf::seconds(1.f / 60.f);
+
 
 	while (this->window.isOpen())
 	{
-		sf::Time elapsed = clock.restart();
-		float dt = elapsed.asSeconds();
-
-		if (peekState() == nullptr) continue;
-		peekState()->handleInput();
-		peekState()->update(dt);
-		this->window.clear(sf::Color::Black);
-		peekState()->draw(dt);
-		ImGui::SFML::Render(this->window);
-		this->window.display();
+		sf::Time elapsedTime = clock.restart();
+		timeSinceLastUpdate += elapsedTime;
+		if (timeSinceLastUpdate > mTimePerFrame) {
+			do {
+				timeSinceLastUpdate -= mTimePerFrame;
+				if (peekState() == nullptr) continue;
+				peekState()->handleInput();
+				peekState()->update(mTimePerFrame.asSeconds());
+				this->window.clear(sf::Color::Black);
+				peekState()->draw(mTimePerFrame.asSeconds());
+			} while (timeSinceLastUpdate > mTimePerFrame);
+			ImGui::SFML::Render(this->window);
+			this->window.display();
+		}
+		else {
+			sf::sleep(mTimePerFrame - timeSinceLastUpdate);
+		}
 	}
 }
 
 Game::Game()
 {
 	this->window.create(sf::VideoMode(1024, 768), "Knighto - 2D Platformer");
-	this->window.setFramerateLimit(60);
+	//this->window.setFramerateLimit(60);
 	ImGui::SFML::Init(this->window);
 
 	this->loadTextures();

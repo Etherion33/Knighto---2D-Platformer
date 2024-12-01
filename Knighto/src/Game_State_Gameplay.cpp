@@ -84,6 +84,7 @@ void Game_State_Gameplay::update(const float dt)
 	show_gui(dt);
 	show_debug(dt); //show debug window
 	//ImGui::ShowTestWindow();
+	ImGui::EndFrame();
 	return;
 }
 
@@ -93,7 +94,7 @@ void Game_State_Gameplay::handleInput()
 
 	while (this->game->window.pollEvent(event))
 	{
-		ImGui::SFML::ProcessEvent(event);
+		ImGui::SFML::ProcessEvent(this->game->window, event);
 		bool noKeyWasPressed = true;
 
 		switch (event.type)

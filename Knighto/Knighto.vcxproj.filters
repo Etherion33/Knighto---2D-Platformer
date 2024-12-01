@@ -25,9 +25,6 @@
     <Filter Include="Source Files\Game_States">
       <UniqueIdentifier>{edc04e57-af0b-4fdd-831b-a0e5a93d9b1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Libraries">
-      <UniqueIdentifier>{a9e743e2-f6cb-4f3b-b897-470b6a4e6d19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Characters">
       <UniqueIdentifier>{894eaa71-2e69-4df3-a51b-27ae19687bf8}</UniqueIdentifier>
     </Filter>
@@ -37,9 +34,12 @@
     <Filter Include="Source Files\World">
       <UniqueIdentifier>{784d4ff4-d882-45a4-a715-7513d238cf1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Libraries">
+      <UniqueIdentifier>{a9e743e2-f6cb-4f3b-b897-470b6a4e6d19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Font_Manager.cpp">
@@ -63,23 +63,11 @@
     <ClCompile Include="src\Game_State_Menu.cpp">
       <Filter>Source Files\Game_States</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui.cpp">
-      <Filter>Header Files\Libraries</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui-SFML.cpp">
-      <Filter>Header Files\Libraries</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui_draw.cpp">
-      <Filter>Header Files\Libraries</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Programming Librares\imgui-master\imgui_demo.cpp">
-      <Filter>Header Files\Libraries</Filter>
-    </ClCompile>
     <ClCompile Include="src\AnimatedSprite.cpp">
-      <Filter>Header Files\Libraries</Filter>
+      <Filter>Source Files\Libraries</Filter>
     </ClCompile>
     <ClCompile Include="src\Animation.cpp">
-      <Filter>Header Files\Libraries</Filter>
+      <Filter>Source Files\Libraries</Filter>
     </ClCompile>
     <ClCompile Include="src\Game_State_Game_Over.cpp">
       <Filter>Source Files\Game_States</Filter>
@@ -113,6 +101,24 @@
     </ClCompile>
     <ClCompile Include="src\Weapon.cpp">
       <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-sfml\imgui-SFML.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_demo.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_draw.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui\imgui_tables.cpp">
+      <Filter>Source Files\Libraries</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,19 +191,22 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="knight_icon.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="Knighto.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\knight_icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
